@@ -54,6 +54,26 @@ export class MonsterService {
   }
 
   /**
+   * Updates entry in db for current monster
+   * @param {Monster} monster
+   * @return {Observable<any | any>}
+   */
+  updateMonster(monster: Monster) {
+
+    let headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    const path = MONSTERS_REST_API + '/' + monster._id;
+
+    console.log('inside service with body : ' + JSON.stringify(monster));
+    return this.http
+      .put(path, monster,{headers: headers})
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error')
+      );
+
+  }
+
+
+  /**
    * Removes entry from monster database
    * @param {string} monsterId
    * @return {Observable<any | any>}
