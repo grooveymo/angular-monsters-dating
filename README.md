@@ -1,3 +1,27 @@
+# Angular Monsters Dating Agency
+## Introduction
+A basic application implemented using
+ - angular 4
+ - node/express
+ - mongodb
+  
+## Instructions
+- Install app dependencies - `$ npm install`
+- Install mongodb
+- start mongodb - `mongod --dbpath .`
+- start server - `$ npm run start_server`
+- start ui - `$ ng serve`
+
+
+
+
+
+
+
+
+
+
+
 # AngularMonstersContacts
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
