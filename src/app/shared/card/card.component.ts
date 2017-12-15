@@ -17,4 +17,7 @@ export class CardComponent implements OnInit {
     console.log('data: ', this.data);
   }
 
+  getFullName(): string {
+    return (this.data.firstName + ' ' + this.data.lastName);
+  }
 }

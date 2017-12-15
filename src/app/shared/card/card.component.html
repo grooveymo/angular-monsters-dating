@@ -5,7 +5,7 @@
     <h4 class="card-title">{{data.username}}</h4>
   </div>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item">{{data.firstName}} {{data.lastName }}</li>
+    <li class="list-group-item">{{getFullName() | capitalizeName}}</li>
     <li class="list-group-item">{{data.email}}</li>
     <li class="list-group-item">Vestibulum at eros</li>
   </ul>
