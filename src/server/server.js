@@ -110,6 +110,8 @@ router.route('/monsters/:id')
   })
   .delete(function(req, res) {
     var toBeDeletedId = req.params.id;
+    
+    console.log('monster to be deleted: ', toBeDeletedId);
     Monster.remove({ _id: toBeDeletedId }, function(err) {
       if (err) {
         console.log('[ERROR] DELETE /monster - ' + JSON.stringify(err));

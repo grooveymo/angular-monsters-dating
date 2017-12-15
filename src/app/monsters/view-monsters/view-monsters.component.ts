@@ -38,6 +38,9 @@ export class ViewMonstersComponent implements OnInit, OnDestroy {
 
   removeMonster(id: string): void {
     console.log('removing: ', id);
+    this.monsterService.removeMonster(id).subscribe(response => {
+      console.log('monsters retrieved => ', response);
+    });
   }
 
 }
