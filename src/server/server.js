@@ -66,7 +66,7 @@ router.get('/', function(req, res) {
 });
 
 //handle get single contact and update contact
-router.route('/monster/:id')
+router.route('/monsters/:id')
   .put(function(req, res) {
     
     console.log('Updating contact : ', req.params.id);
@@ -92,13 +92,13 @@ router.route('/monster/:id')
         
         console.log('*** Updated contacted : ', updatedMonster);
         
-        res.json({ message: 'Contact updated!', contact: updatedMonster });
+        res.json({ message: 'Monster updated!', monster: updatedMonster });
       });
       
     });
   })
   .get(function(req, res) {
-    console.log('[SPECIFIC] GET/ contact : ', req);
+    console.log('[SPECIFIC] GET/ monster : ', req);
     Monster.find({ _id: req.params.id }, function(err, monster) {
       if (err) {
         console.log('[ERROR] GET /monster - ' + JSON.stringify(err));
@@ -120,11 +120,11 @@ router.route('/monster/:id')
     
   });
 
-// create a NEW monster (accessed at POST http://localhost:8080/api/monster)
-router.route('/monster/')
+// create a NEW monster (accessed at POST http://localhost:9090/api/monster)
+router.route('/monsters/')
   .post(function(req, res) {
-    console.log('calling POST /monster/ with body : ' + JSON.stringify(req.body));
-    var monster = new Monster();		// create a new instance of the TodoList model
+    console.log('calling POST /monsters/ with body : ' + JSON.stringify(req.body));
+    var monster = new Monster();		// create a new instance of the monster model
     monster.firstName = req.body.firstName;
     monster.lastName = req.body.lastName;
     monster.email = req.body.email;
@@ -136,12 +136,12 @@ router.route('/monster/')
         return res.send(err);
       }
       
-      res.json({ message: 'New Contact created!', contact: monster });
+      res.json({ message: 'Monster has been added to db!', monster: monster });
     });
   })
   .get(function(req, res) {
-    console.log('[GENERAL] calling GET /monster/', req);
-    console.log('[GENERAL] calling GET /monster/');
+    console.log('[GENERAL] calling GET /monsters/', req);
+    console.log('[GENERAL] calling GET /monsters/');
     Monster.find(function(err, contactList) {
       if (err) {
         console.log('[ERROR] GET /monster - ' + JSON.stringify(err));

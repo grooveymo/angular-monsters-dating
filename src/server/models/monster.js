@@ -27,4 +27,4 @@ var MonsterSchema = new Schema({
                                   }
                                 });
 
-module.exports.Contact = mongoose.model('Contact', MonsterSchema);
+module.exports.Monster = mongoose.model('Monster', MonsterSchema);

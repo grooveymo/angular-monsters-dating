@@ -1,6 +1,5 @@
 <div class="card card-outline-secondary mb-3 ">
   <div class="card-block">
-
     <form [formGroup]="addMonsterForm" novalidate>
 
       <fieldset formGroupName="name">
@@ -75,13 +74,11 @@
 
 
       <div class="pull-right">
-        <button type="submit" class="btn btn-primary" [disabled]="!addMonsterForm.valid" (click)='onCreate()'>Submit
+        <button type="submit" class="btn btn-primary" [disabled]="!addMonsterForm.valid" (click)='onSave()'>Submit
         </button>
       </div>
 
     </form>
-
-
   </div>
 </div>
 

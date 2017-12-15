@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {MonsterService} from '../services/monster.service';
+import {Monster} from '../services/monster.model';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-add-monster',
@@ -16,7 +19,8 @@ export class AddMonsterComponent implements OnInit {
 
   readonly REGEX_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  constructor() { }
+  constructor(private monsterService: MonsterService) {
+  }
 
   ngOnInit() {
     //create form controls
@@ -30,7 +34,8 @@ export class AddMonsterComponent implements OnInit {
 
     //create form
     this.addMonsterForm = new FormGroup({
-      name: new FormGroup({ firstName: this.firstName,
+      name: new FormGroup({
+        firstName: this.firstName,
         lastName: this.lastName,
       }),
       imageFile: this.imageFile,
@@ -38,9 +43,15 @@ export class AddMonsterComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSave() {
     if (this.addMonsterForm.valid) {
-      console.log("Form Submitted!");
+      console.log('Form Submitted!');
+      const newMonster = new Monster(this.firstName.value, this.lastName.value,
+        this.email.value, this.imageFile.value);
+
+      this.monsterService.addMonster(newMonster).subscribe(  persistedMonster => {
+        console.log('monster persisted: ', persistedMonster);
+      });
       this.addMonsterForm.reset();
     }
   }
