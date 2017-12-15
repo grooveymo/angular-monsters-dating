@@ -12,6 +12,7 @@ export class AddMonsterComponent implements OnInit {
   firstName: FormControl;
   lastName: FormControl;
   email: FormControl;
+  imageFile: FormControl;
 
   readonly REGEX_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -25,12 +26,14 @@ export class AddMonsterComponent implements OnInit {
       Validators.required,
       Validators.pattern(this.REGEX_EMAIL)
     ]);
+    this.imageFile = new FormControl('');
 
     //create form
     this.addMonsterForm = new FormGroup({
       name: new FormGroup({ firstName: this.firstName,
         lastName: this.lastName,
       }),
+      imageFile: this.imageFile,
       email: this.email
     });
   }
