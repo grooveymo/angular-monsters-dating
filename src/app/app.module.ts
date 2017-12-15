@@ -6,6 +6,7 @@ import {LayoutModule} from './layout/layout.module';
 import {AppRoutingModule} from './app-routing.module';
 import {RouterModule} from '@angular/router';
 import {MonstersModule} from './monsters/monsters.module';
+import {SharedModule} from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {MonstersModule} from './monsters/monsters.module';
     RouterModule,
     LayoutModule,
     AppRoutingModule,
-    MonstersModule
+    MonstersModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

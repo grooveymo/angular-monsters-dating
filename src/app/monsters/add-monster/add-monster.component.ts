@@ -23,7 +23,14 @@ export class AddMonsterComponent implements OnInit {
   }
 
   ngOnInit() {
-    //create form controls
+    this.createFormControls();
+    this.createForm()
+  }
+
+  /**
+   * Create form controls
+   */
+  createFormControls(): void {
     this.firstName = new FormControl('', [Validators.required, Validators.minLength(5)]);
     this.lastName = new FormControl('', [Validators.required, Validators.minLength(5)]);
     this.email = new FormControl('', [
@@ -31,8 +38,12 @@ export class AddMonsterComponent implements OnInit {
       Validators.pattern(this.REGEX_EMAIL)
     ]);
     this.imageFile = new FormControl('');
+  }
 
-    //create form
+  /**
+   * Create Form
+   */
+  createForm(): void {
     this.addMonsterForm = new FormGroup({
       name: new FormGroup({
         firstName: this.firstName,
@@ -43,13 +54,17 @@ export class AddMonsterComponent implements OnInit {
     });
   }
 
+
+  /**
+   * Save form details
+   */
   onSave() {
     if (this.addMonsterForm.valid) {
       console.log('Form Submitted!');
       const newMonster = new Monster(this.firstName.value, this.lastName.value,
         this.email.value, this.imageFile.value);
 
-      this.monsterService.addMonster(newMonster).subscribe(  persistedMonster => {
+      this.monsterService.addMonster(newMonster).subscribe(persistedMonster => {
         console.log('monster persisted: ', persistedMonster);
       });
       this.addMonsterForm.reset();
