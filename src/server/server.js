@@ -130,6 +130,7 @@ router.route('/monsters/')
     monster.firstName = req.body.firstName;
     monster.lastName = req.body.lastName;
     monster.email = req.body.email;
+    monster.username = req.body.username;
 
     monster.save(function(err) {
       if (err) {

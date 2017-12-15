@@ -20,7 +20,14 @@ var MonsterSchema = new Schema({
                                     trim: true,
                                     required: 'email cannot be blank'
                                   },
-                                  imageFile: {
+                                 username: {
+                                   type: String,
+                                   default: '',
+                                   trim: true,
+                                   required: 'username cannot be blank'
+                                 },
+  
+                                 imageFile: {
                                     type: String,
                                     default: '',
                                     trim: true

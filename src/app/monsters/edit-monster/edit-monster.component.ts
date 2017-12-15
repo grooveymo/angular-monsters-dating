@@ -21,9 +21,11 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
   firstName: FormControl;
   lastName: FormControl;
   email: FormControl;
+  username: FormControl;
   imageFile: FormControl;
 
   readonly REGEX_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  readonly REGEX_USERNAME = '^[a-zA-Z0-9_]*$';
 
   constructor(private router: Router, private route: ActivatedRoute, private monsterService: MonsterService) {
   }
@@ -53,8 +55,10 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
     this.firstName.setValue(this.monster.firstName);
     this.lastName.setValue(this.monster.lastName);
     this.email.setValue(this.monster.email);
+    this.username.setValue(this.monster.username);
     this.imageFile.setValue(this.monster.imageFile);
   }
+
   /**
    * Create form controls
    */
@@ -64,6 +68,10 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
     this.email = new FormControl('', [
       Validators.required,
       Validators.pattern(this.REGEX_EMAIL)
+    ]);
+    this.username = new FormControl('', [
+      Validators.required,
+      Validators.pattern(this.REGEX_USERNAME)
     ]);
     this.imageFile = new FormControl('');
   }
@@ -78,6 +86,7 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
         lastName: this.lastName,
       }),
       imageFile: this.imageFile,
+      username: this.username,
       email: this.email
     });
   }
@@ -92,7 +101,7 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
     if (this.editMonsterForm.valid) {
       console.log('Form Submitted!');
       const newMonster = new Monster(this.firstName.value, this.lastName.value,
-        this.email.value, this.imageFile.value, this.monster._id);
+        this.email.value, this.imageFile.value, this.username.value, this.monster._id);
 
       this.monsterService.updateMonster(newMonster).subscribe(persistedMonster => {
         console.log('monster persisted: ', persistedMonster);

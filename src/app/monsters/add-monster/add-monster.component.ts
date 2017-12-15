@@ -15,9 +15,12 @@ export class AddMonsterComponent implements OnInit {
   firstName: FormControl;
   lastName: FormControl;
   email: FormControl;
+  username: FormControl;
   imageFile: FormControl;
 
   readonly REGEX_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  readonly REGEX_USERNAME = '^[a-zA-Z0-9_]*$';
 
   constructor(private monsterService: MonsterService) {
   }
@@ -37,6 +40,10 @@ export class AddMonsterComponent implements OnInit {
       Validators.required,
       Validators.pattern(this.REGEX_EMAIL)
     ]);
+    this.username = new FormControl('', [
+      Validators.required,
+      Validators.pattern(this.REGEX_USERNAME)
+    ]);
     this.imageFile = new FormControl('');
   }
 
@@ -50,6 +57,7 @@ export class AddMonsterComponent implements OnInit {
         lastName: this.lastName,
       }),
       imageFile: this.imageFile,
+      username: this.username,
       email: this.email
     });
   }
@@ -62,7 +70,7 @@ export class AddMonsterComponent implements OnInit {
     if (this.addMonsterForm.valid) {
       console.log('Form Submitted!');
       const newMonster = new Monster(this.firstName.value, this.lastName.value,
-        this.email.value, this.imageFile.value);
+        this.email.value, this.username.value, this.imageFile.value);
 
       this.monsterService.addMonster(newMonster).subscribe(persistedMonster => {
         console.log('monster persisted: ', persistedMonster);
