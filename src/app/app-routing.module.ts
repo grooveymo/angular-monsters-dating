@@ -1,21 +1,23 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './layout/home/home.component';
+import {AddMonsterComponent} from './monsters/add-monster/add-monster.component';
+import {ViewMonstersComponent} from './monsters/view-monsters/view-monsters.component';
 
 // declare app routes (note should not have leading slash)
 const appRoutes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
-  // {path: 'create-contact', component: CreateContactComponent},
-  // {path: 'view-contacts', component: ListContactsComponent},
+  {path: 'add-monster', component: AddMonsterComponent},
+  {path: 'view-monsters', component: ViewMonstersComponent},
   // {path : 'edit-contact/:id', component : EditContactComponent}
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, {enableTracing: true})
   ],
   declarations: [],
   exports: [RouterModule] // Need this to ensure that routes get registered in the root module
