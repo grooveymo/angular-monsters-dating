@@ -1,5 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+/**
+ * Capitalizes First & Last Name, i.e.
+ * tom smith becomes Tom Smith.
+ */
 @Pipe({
   name: 'capitalizeName'
 })
