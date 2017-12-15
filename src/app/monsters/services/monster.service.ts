@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {Monster} from './monster.model';
+import {Monster} from '../models/monster.model';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
@@ -24,7 +24,10 @@ export class MonsterService {
 
     console.log('inside service with body : ' + JSON.stringify(body));
     return this.http
-      .post<Monster>(MONSTERS_REST_API, body, {headers: headers})
+      .post<Monster>(MONSTERS_REST_API, body, {headers: headers});
+      // .subscribe((res) => {
+      //     console.log('res:', res);
+      // });
       // // .map((response: Response) => {
       // //   const persistedMonster = response.monster;
       // //   console.log('1.) service responds with ' + JSON.stringify(response));
@@ -36,4 +39,15 @@ export class MonsterService {
 
   }
 
+
+  /**
+   * Returns list of All Monsters
+   * @return {Observable<Monster[]>}
+   */
+  getMonsters() : Observable<Monster[]> {
+    return this.http
+      .get(MONSTERS_REST_API)
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+
+  }
 }

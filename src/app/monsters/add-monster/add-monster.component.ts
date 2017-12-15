@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MonsterService} from '../services/monster.service';
-import {Monster} from '../services/monster.model';
+import {Monster} from '../models/monster.model';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
