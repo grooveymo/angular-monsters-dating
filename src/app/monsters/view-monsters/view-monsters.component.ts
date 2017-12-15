@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MonsterService} from '../services/monster.service';
 import {Monster} from '../models/monster.model';
 import {Subscription} from 'rxjs/Subscription';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-view-monsters',
@@ -14,7 +15,7 @@ export class ViewMonstersComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
 
-  constructor(private monsterService: MonsterService) {
+  constructor(private router: Router, private monsterService: MonsterService) {
   }
 
   ngOnInit() {
@@ -32,6 +33,7 @@ export class ViewMonstersComponent implements OnInit, OnDestroy {
 
   editMonster(id: string): void {
     console.log('editing: ', id);
+    this.router.navigate(['/edit-monster/', id]);
   }
 
   removeMonster(id: string): void {

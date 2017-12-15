@@ -10,7 +10,8 @@ const MONSTERS_REST_API = 'http://localhost:9090/api/monsters';
 @Injectable()
 export class MonsterService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
 
   /**
@@ -20,22 +21,11 @@ export class MonsterService {
    */
   addMonster(body: Monster): Observable<Monster> {
 
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    let headers = new HttpHeaders({'Content-Type': 'application/json'});
 
     console.log('inside service with body : ' + JSON.stringify(body));
     return this.http
       .post<Monster>(MONSTERS_REST_API, body, {headers: headers});
-      // .subscribe((res) => {
-      //     console.log('res:', res);
-      // });
-      // // .map((response: Response) => {
-      // //   const persistedMonster = response.monster;
-      // //   console.log('1.) service responds with ' + JSON.stringify(response));
-      // //   console.log('2.) service responds with ' + JSON.stringify(persistedMonster));
-      // //   return persistedMonster;
-      // // })
-      // .catch((error: any) => Observable.throw(error.json().error || 'Server error')
-      // );
 
   }
 
@@ -44,10 +34,35 @@ export class MonsterService {
    * Returns list of All Monsters
    * @return {Observable<Monster[]>}
    */
-  getMonsters() : Observable<Monster[]> {
+  getMonsters(): Observable<Monster[]> {
     return this.http
       .get(MONSTERS_REST_API)
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
 
   }
+
+  /**
+   * Retrieves specific Monster
+   * @param {string} _id monster id
+   * @return {Monster} Instance of Monster
+   */
+  getMonster(_id: string): Observable<Monster> {
+    console.log(' looking for _id: ', _id);
+    return this.http
+      .get(MONSTERS_REST_API + '/' + _id)
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  /**
+   * Removes entry from monster database
+   * @param {string} monsterId
+   * @return {Observable<any | any>}
+   */
+  removeContact(monsterId: string) {
+    const path = MONSTERS_REST_API + '/' + monsterId;
+    return this.http.delete(path)
+      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+
+  }
+
 }
