@@ -6,12 +6,14 @@ import { EditMonsterComponent } from './edit-monster/edit-monster.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MonsterService} from './services/monster.service';
 import {HttpClientModule} from '@angular/common/http';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   declarations: [AddMonsterComponent, ViewMonstersComponent, EditMonsterComponent],
   providers: [MonsterService]

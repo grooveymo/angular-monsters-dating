@@ -82,6 +82,8 @@ router.route('/monsters/:id')
       monster.firstName = req.body.firstName;
       monster.lastName = req.body.lastName;
       monster.email = req.body.email;
+      monster.imageFile = req.body.imageFile;
+      monster.username = req.body.username;
       
       monster.save(function(err, updatedMonster) {
         if (err) {
@@ -130,6 +132,7 @@ router.route('/monsters/')
     monster.firstName = req.body.firstName;
     monster.lastName = req.body.lastName;
     monster.email = req.body.email;
+    monster.imageFile = req.body.imageFile;
     monster.username = req.body.username;
 
     monster.save(function(err) {
