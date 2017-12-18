@@ -50,7 +50,7 @@ export class ViewMonstersComponent implements OnInit, OnDestroy {
     let id = $event;
     this.monsterService.removeMonster(id).subscribe(response => {
       console.log('monsters retrieved => ', response);
-      this.router.navigate(['/view-monsters/'));
+      this.router.navigate(['/view-monsters/']);
     });
   }
 
