@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MonsterService} from '../services/monster.service';
 import {Monster} from '../models/monster.model';
 import {Observable} from 'rxjs/Observable';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-monster',
@@ -22,7 +23,7 @@ export class AddMonsterComponent implements OnInit {
 
   readonly REGEX_USERNAME = '^[a-zA-Z0-9_]*$';
 
-  constructor(private monsterService: MonsterService) {
+  constructor(private monsterService: MonsterService, private router: Router) {
   }
 
   ngOnInit() {
@@ -74,8 +75,10 @@ export class AddMonsterComponent implements OnInit {
 
       this.monsterService.addMonster(newMonster).subscribe(persistedMonster => {
         console.log('monster persisted: ', persistedMonster);
+        this.addMonsterForm.reset();
+        this.router.navigate(['/view-monsters/']);
+
       });
-      this.addMonsterForm.reset();
     }
   }
 
