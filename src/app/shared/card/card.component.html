@@ -1,14 +1,18 @@
-<div class="card" style="background-color: lightgrey">
-<!--<div class="card" style="background-color: chartreuse">-->
-  <img class="card-img-top" src="/assets/images/{{data.imageFile}}" alt="Card image cap" height="80em" width="80em">
-  <div class="card-block">
-    <h4 class="card-title">{{data.username}}</h4>
+<div class="card" style="background-color: lightgrey;">
+
+  <div class="card-header d-flex align-items-center justify-content-between">
+    <img class=“card-img-top” src="/assets/images/{{data.imageFile}}" alt="Card image cap" height="80em" width="80em">
+    <h4 class=“card-title”>{{data.username}}</h4>
   </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">{{getFullName() | capitalizeName}}</li>
-    <li class="list-group-item">{{data.email}}</li>
-    <li class="list-group-item">Vestibulum at eros</li>
-  </ul>
+
+  <div class=“card-body”>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">{{getFullName() | capitalizeName}}</li>
+      <li class="list-group-item">{{data.email}}</li>
+      <li class="list-group-item">Vestibulum at eros</li>
+    </ul>
+  </div>
+
   <div class="card-block">
     <a href="#" class="card-link" routerLink="/edit-monster/{{data._id}}" routerLinkActive="active">Edit</a>
     <a href="" class="card-link" (click)="removeMonster()">Delete</a>
