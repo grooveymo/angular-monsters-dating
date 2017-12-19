@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MonsterService} from '../services/monster.service';
 import {Monster} from '../models/monster.model';
 import {Subscription} from 'rxjs/Subscription';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-view-monsters',
@@ -12,23 +12,16 @@ import {Router} from '@angular/router';
 export class ViewMonstersComponent implements OnInit, OnDestroy {
 
   monsters: Monster[] = [];
-  subscription: Subscription;
 
-
-  constructor(private router: Router, private monsterService: MonsterService) {
+  constructor(private router: Router, private monsterService: MonsterService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.subscription = this.monsterService.getMonsters().subscribe(data => {
-      this.monsters = data
-      console.log('monsters retrieved => ', this.monsters);
-    });
+    this.monsters = this.route.snapshot.data.monstersData;
+    console.log('monsters retrieved => ', this.monsters);
   }
 
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 
   editMonster(id: string): void {

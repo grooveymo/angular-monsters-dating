@@ -7,6 +7,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MonsterService} from './services/monster.service';
 import {HttpClientModule} from '@angular/common/http';
 import {SharedModule} from '../shared/shared.module';
+import {GetMonstersResolver} from './services/get-monsters.resolver';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import {SharedModule} from '../shared/shared.module';
     SharedModule
   ],
   declarations: [AddMonsterComponent, ViewMonstersComponent, EditMonsterComponent],
-  providers: [MonsterService]
+  providers: [MonsterService, GetMonstersResolver]
 
 })
 export class MonstersModule { }
