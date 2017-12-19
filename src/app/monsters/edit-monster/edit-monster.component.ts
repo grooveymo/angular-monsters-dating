@@ -15,8 +15,6 @@ import 'rxjs/add/operator/switchMap';
 export class EditMonsterComponent implements OnInit, OnDestroy {
 
   monster: Monster;
-  subscription: Subscription;
-
   editMonsterForm: FormGroup;
   firstName: FormControl;
   lastName: FormControl;
@@ -31,21 +29,10 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this.createFormControls();
     this.createForm();
-
-    this.route.params
-      .switchMap((params: Params) => this.monsterService.getMonster(params['id']))
-      .subscribe(
-        (monster: Monster) => {
-          console.log('EditMonster : ', monster);
-          this.monster = monster[0];
-          this.populateForm();
-        }
-      );
-
-
+    this.monster = this.route.snapshot.data.monsterData[0];
+    this.populateForm();
   }
 
   /**
@@ -92,9 +79,6 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 
   onSave(): void {

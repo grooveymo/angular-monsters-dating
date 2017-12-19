@@ -6,6 +6,7 @@ import {AddMonsterComponent} from './monsters/add-monster/add-monster.component'
 import {ViewMonstersComponent} from './monsters/view-monsters/view-monsters.component';
 import {EditMonsterComponent} from './monsters/edit-monster/edit-monster.component';
 import {GetMonstersResolver} from './monsters/services/get-monsters.resolver';
+import {GetMonsterResolver} from './monsters/services/get-monster.resolver';
 
 // declare app routes (note should not have leading slash)
 const appRoutes: Routes = [
@@ -13,7 +14,7 @@ const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'add-monster', component: AddMonsterComponent},
   {path: 'view-monsters', component: ViewMonstersComponent, resolve: { monstersData: GetMonstersResolver }},
-  {path : 'edit-monster/:id', component : EditMonsterComponent}
+  {path : 'edit-monster/:id', component : EditMonsterComponent, resolve: { monsterData: GetMonsterResolver }}
 ];
 
 @NgModule({

@@ -8,6 +8,7 @@ import {MonsterService} from './services/monster.service';
 import {HttpClientModule} from '@angular/common/http';
 import {SharedModule} from '../shared/shared.module';
 import {GetMonstersResolver} from './services/get-monsters.resolver';
+import {GetMonsterResolver} from './services/get-monster.resolver';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import {GetMonstersResolver} from './services/get-monsters.resolver';
     SharedModule
   ],
   declarations: [AddMonsterComponent, ViewMonstersComponent, EditMonsterComponent],
-  providers: [MonsterService, GetMonstersResolver]
+  providers: [MonsterService, GetMonsterResolver, GetMonstersResolver]
 
 })
 export class MonstersModule { }
