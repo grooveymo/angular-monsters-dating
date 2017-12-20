@@ -102,9 +102,14 @@ router.route('/monsters/:id')
   .get(function(req, res) {
     console.log('[SPECIFIC] GET/ monster : ', req);
     Monster.find({ _id: req.params.id }, function(err, monster) {
+      console.log('[FOO] MONSTER: ',monster);
       if (err) {
         console.log('[ERROR] GET /monster - ' + JSON.stringify(err));
         return res.send(err);
+      }
+      if (!monster || monster.length == 0) {
+        res.status(404)        // HTTP status 404: NotFound
+          .send('Not found');
       }
       
       res.json(monster);
