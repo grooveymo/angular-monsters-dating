@@ -17,8 +17,13 @@ export class ViewMonstersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.monsters = this.route.snapshot.data.monstersData;
-    console.log('monsters retrieved => ', this.monsters);
+    let resolvedValue = this.route.snapshot.data.monstersData;
+    if(resolvedValue.hasError()) {
+      console.log('Error retrieving data', resolvedValue.error);
+    } else {
+      this.monsters = resolvedValue.data;
+      console.log('monsters retrieved => ', this.monsters);
+    }
   }
 
   ngOnDestroy() {

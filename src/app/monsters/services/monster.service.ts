@@ -36,9 +36,7 @@ export class MonsterService {
    */
   getMonsters(): Observable<Monster[]> {
     return this.http
-      .get(MONSTERS_REST_API)
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-
+      .get<Monster[]>(MONSTERS_REST_API);
   }
 
   /**
@@ -50,7 +48,6 @@ export class MonsterService {
     console.log(' looking for _id: ', _id);
     return this.http
       .get<Monster>(MONSTERS_REST_API + '/' + _id);
-//      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   /**
