@@ -31,8 +31,14 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.createFormControls();
     this.createForm();
-    this.monster = this.route.snapshot.data.monsterData[0];
-    this.populateForm();
+
+    let resolvedValue = this.route.snapshot.data.monsterData;
+    if(resolvedValue.hasError()) {
+      console.log('Error retrieving data', resolvedValue.error);
+    } else {
+      this.monster = resolvedValue.data[0];
+      this.populateForm();
+    }
   }
 
   /**

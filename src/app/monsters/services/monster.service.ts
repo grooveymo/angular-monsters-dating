@@ -49,8 +49,8 @@ export class MonsterService {
   getMonster(_id: string): Observable<Monster> {
     console.log(' looking for _id: ', _id);
     return this.http
-      .get(MONSTERS_REST_API + '/' + _id)
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+      .get<Monster>(MONSTERS_REST_API + '/' + _id);
+//      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
 
   /**
