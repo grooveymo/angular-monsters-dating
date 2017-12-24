@@ -22,6 +22,8 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
   username: FormControl;
   imageFile: FormControl;
 
+  fetchError = false;
+
   readonly REGEX_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   readonly REGEX_USERNAME = '^[a-zA-Z0-9_]*$';
 
@@ -35,6 +37,7 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
     let resolvedValue = this.route.snapshot.data.monsterData;
     if(resolvedValue.hasError()) {
       console.log('Error retrieving data', resolvedValue.error);
+      this.fetchError = true;
     } else {
       this.monster = resolvedValue.data[0];
       this.populateForm();

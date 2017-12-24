@@ -1,105 +1,114 @@
-<div class="card card-outline-secondary mb-3 ">
-  <div class="card-block">
-    <form [formGroup]="editMonsterForm" novalidate>
+<div *ngIf="fetchError;else show_content ">
+  <div class="alert alert-danger" role="alert">
+    <strong>Oops</strong> There was a problem retrieving data. Please try again and contact an
+    administrator if this problem persists.
+  </div>
+</div>
 
-      <fieldset formGroupName="name">
-        <div class="form-group" [ngClass]="{
+<ng-template #show_content>
+  <div class="card card-outline-secondary mb-3 ">
+    <div class="card-block">
+      <form [formGroup]="editMonsterForm" novalidate>
+
+        <fieldset formGroupName="name">
+          <div class="form-group" [ngClass]="{
           'has-danger': firstName.invalid && (firstName.dirty || firstName.touched),
           'has-success': firstName.valid && (firstName.dirty || firstName.touched)
         }">
 
-          <label>First Name</label>
-          <div class="input-group">
-            <span class="input-group-addon"><span class="fa fa fa-user" aria-hidden="true"></span></span>
-            <input type="text"
-                   class="form-control"
-                   formControlName="firstName">
+            <label>First Name</label>
+            <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa fa-user" aria-hidden="true"></span></span>
+              <input type="text"
+                     class="form-control"
+                     formControlName="firstName">
+            </div>
+
+
+            <div class="form-control-feedback" *ngIf="firstName.errors && (firstName.dirty || firstName.touched)">
+              <p *ngIf="firstName.errors.required">First Name is required</p>
+              <p *ngIf="firstName.errors.minlength">First Name must be at least 5 characters long</p>
+            </div>
           </div>
 
+          <div class="form-group" [ngClass]="{
+          'has-danger': lastName.invalid && (lastName.dirty || lastName.touched),
+          'has-success': lastName.valid && (lastName.dirty || lastName.touched)
+        }">
+            <label>Last Name </label>
+            <div class="input-group">
+              <span class="input-group-addon"><span class="fa fa fa-user" aria-hidden="true"></span></span>
+              <input type="text"
+                     class="form-control"
+                     formControlName="lastName">
+            </div>
+            <div class="form-control-feedback" *ngIf="lastName.errors && (lastName.dirty || lastName.touched)">
+              <p *ngIf="lastName.errors.required">Last Name is required</p>
+              <p *ngIf="lastName.errors.minlength">Last Name must be at least 5 characters long</p>
+            </div>
 
-          <div class="form-control-feedback" *ngIf="firstName.errors && (firstName.dirty || firstName.touched)">
-            <p *ngIf="firstName.errors.required">First Name is required</p>
-            <p *ngIf="firstName.errors.minlength">First Name must be at least 5 characters long</p>
+          </div>
+        </fieldset>
+
+        <div class="form-group" [ngClass]="{
+        'has-danger': email.invalid && (email.dirty || email.touched),
+        'has-success': email.valid && (email.dirty || email.touched)
+   }">
+          <label>Email</label>
+
+          <div class="input-group">
+            <span class="input-group-addon"><span class="fa fa-envelope" aria-hidden="true"></span></span>
+            <input type="email"
+                   class="form-control"
+                   formControlName="email">
+          </div>
+
+          <div class="form-control-feedback"
+               *ngIf="email.errors && (email.dirty || email.touched)">
+            <p *ngIf="email.errors.required">Email is required</p>
+            <p *ngIf="email.errors.pattern">The email address must be valid</p>
           </div>
         </div>
 
         <div class="form-group" [ngClass]="{
-          'has-danger': lastName.invalid && (lastName.dirty || lastName.touched),
-          'has-success': lastName.valid && (lastName.dirty || lastName.touched)
-        }">
-          <label>Last Name </label>
-          <div class="input-group">
-            <span class="input-group-addon"><span class="fa fa fa-user" aria-hidden="true"></span></span>
-            <input type="text"
-                   class="form-control"
-                   formControlName="lastName">
-          </div>
-          <div class="form-control-feedback" *ngIf="lastName.errors && (lastName.dirty || lastName.touched)">
-            <p *ngIf="lastName.errors.required">Last Name is required</p>
-            <p *ngIf="lastName.errors.minlength">Last Name must be at least 5 characters long</p>
-          </div>
-
-        </div>
-      </fieldset>
-
-      <div class="form-group" [ngClass]="{
-        'has-danger': email.invalid && (email.dirty || email.touched),
-        'has-success': email.valid && (email.dirty || email.touched)
-   }">
-        <label>Email</label>
-
-        <div class="input-group">
-          <span class="input-group-addon"><span class="fa fa-envelope" aria-hidden="true"></span></span>
-          <input type="email"
-                 class="form-control"
-                 formControlName="email">
-        </div>
-
-        <div class="form-control-feedback"
-             *ngIf="email.errors && (email.dirty || email.touched)">
-          <p *ngIf="email.errors.required">Email is required</p>
-          <p *ngIf="email.errors.pattern">The email address must be valid</p>
-        </div>
-      </div>
-
-      <div class="form-group" [ngClass]="{
         'has-danger': username.invalid && (username.dirty || username.touched),
         'has-success': username.valid && (username.dirty || username.touched)
    }">
-        <label>Username</label>
+          <label>Username</label>
 
-        <div class="input-group">
-          <span class="input-group-addon"><span class="fa fa-envelope" aria-hidden="true"></span></span>
-          <input type="text"
-                 class="form-control"
-                 formControlName="username">
+          <div class="input-group">
+            <span class="input-group-addon"><span class="fa fa-envelope" aria-hidden="true"></span></span>
+            <input type="text"
+                   class="form-control"
+                   formControlName="username">
+          </div>
+
+          <div class="form-control-feedback"
+               *ngIf="username.errors && (username.dirty || username.touched)">
+            <p *ngIf="username.errors.required">username is required</p>
+            <p *ngIf="username.errors.pattern">The username must be valid</p>
+          </div>
         </div>
 
-        <div class="form-control-feedback"
-             *ngIf="username.errors && (username.dirty || username.touched)">
-          <p *ngIf="username.errors.required">username is required</p>
-          <p *ngIf="username.errors.pattern">The username must be valid</p>
+        <div class="form-group">
+          <label>Image File </label>
+          <div class="input-group">
+            <span class="input-group-addon"><span class="fa fa-file-image-o" aria-hidden="true"></span></span>
+            <input type="text"
+                   class="form-control"
+                   formControlName="imageFile">
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label>Image File </label>
-        <div class="input-group">
-          <span class="input-group-addon"><span class="fa fa-file-image-o" aria-hidden="true"></span></span>
-          <input type="text"
-                 class="form-control"
-                 formControlName="imageFile">
+
+        <div class="pull-right">
+          <button type="submit" class="btn btn-primary" [disabled]="!editMonsterForm.valid" (click)='onSave()'>Submit
+          </button>
         </div>
-      </div>
 
-
-      <div class="pull-right">
-        <button type="submit" class="btn btn-primary" [disabled]="!editMonsterForm.valid" (click)='onSave()'>Submit
-        </button>
-      </div>
-
-    </form>
+      </form>
+    </div>
   </div>
-</div>
+</ng-template>
 
 
