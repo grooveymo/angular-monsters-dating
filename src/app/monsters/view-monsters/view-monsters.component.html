@@ -1,38 +1,17 @@
-<!--<table class='table table-striped'>-->
-  <!--<thead class='thead-inverse'>-->
-  <!--<th> First Name </th>-->
-  <!--<th> Last Name </th>-->
-  <!--<th> Email </th>-->
-  <!--<th> Edit </th>-->
-  <!--<th> Remove </th>-->
-  <!--</thead>-->
-  <!--<tbody>-->
-  <!--<tr *ngFor="let monster of monsters">-->
-    <!--<td>-->
-      <!--{{monster.firstName}}-->
-    <!--</td>-->
-    <!--<td>-->
-      <!--{{monster.lastName}}-->
-    <!--</td>-->
-    <!--<td>-->
-      <!--{{monster.email}}-->
-    <!--</td>-->
-    <!--<td >-->
-      <!--<button (click)='editMonster(monster._id)' class='btn btn-warning'>Edit</button>-->
-    <!--</td>-->
-    <!--<td >-->
-      <!--<button (click)='removeMonster(monster._id)' class='btn btn-danger'>Remove</button>-->
-    <!--</td>-->
-  <!--</tr>-->
-  <!--</tbody>-->
-<!--</table>-->
+<div *ngIf="(monsters.length == 0);else show_content ">
+  <div class="alert alert-danger" role="alert">
+    <strong>Oops</strong> There are no monsters in the database at the moment. Please
+    <a routerLink="/add-monster">add one</a>
+  </div>
+</div>
 
-<!--<div class="card-columns" style="width: 20rem;">-->
-<div class="card-columns">
-<div *ngFor="let monster of monsters" style="margin: 5px">
-  <app-card [data-input]="monster" (removeMonster)="removeMonster($event)"></app-card>
-</div>
-</div>
+<ng-template #show_content>
+  <div class="card-columns">
+    <div *ngFor="let monster of monsters" style="margin: 5px">
+      <app-card [data-input]="monster" (removeMonster)="removeMonster($event)"></app-card>
+    </div>
+  </div>
+</ng-template>
 
 
 

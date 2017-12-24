@@ -100,19 +100,14 @@ router.route('/monsters/:id')
     });
   })
   .get(function(req, res) {
-    console.log('[FOO] GET/ monster : ', req.params);
     Monster.findOne({ _id: req.params.id }, function(err, monster) {
-      console.log('[FOO] MONSTER: ',monster);
       if (err) {
-        console.log('[FOO] ERROR GET /monster - ' + JSON.stringify(err));
         return res.send(err);
       }
       if (!monster || monster.length == 0) {
-        console.log('[FOO] check: ', monster);
         res.status(404)        // HTTP status 404: NotFound
           .send('Not found');
       } else {
-        console.log('[FOO] FINAL MONSTER: ', monster);
         res.json(monster);
       }
       
@@ -121,12 +116,14 @@ router.route('/monsters/:id')
   .delete(function(req, res) {
     var toBeDeletedId = req.params.id;
     
-    console.log('monster to be deleted: ', toBeDeletedId);
+    console.log('[ APPLE ] monster to be deleted: ', toBeDeletedId);
     Monster.remove({ _id: toBeDeletedId }, function(err) {
       if (err) {
-        console.log('[ERROR] DELETE /monster - ' + JSON.stringify(err));
+        console.log('[ APPLE ] ERROR: DELETE /monster - ' + JSON.stringify(err));
         return res.send(err);
       }
+      console.log('[ APPLE ] remove monster called: ', toBeDeletedId);
+  
       res.json({ message: 'Successfully deleted', id: toBeDeletedId });
     });
     

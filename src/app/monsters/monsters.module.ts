@@ -9,13 +9,15 @@ import {HttpClientModule} from '@angular/common/http';
 import {SharedModule} from '../shared/shared.module';
 import {GetMonstersResolver} from './services/get-monsters.resolver';
 import {GetMonsterResolver} from './services/get-monster.resolver';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    RouterModule
   ],
   declarations: [AddMonsterComponent, ViewMonstersComponent, EditMonsterComponent],
   providers: [MonsterService, GetMonsterResolver, GetMonstersResolver]
