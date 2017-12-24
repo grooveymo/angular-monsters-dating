@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddMonsterComponent } from './add-monster.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MonsterService} from '../services/monster.service';
+import {HttpClientModule} from '@angular/common/http';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('AddMonsterComponent', () => {
   let component: AddMonsterComponent;
@@ -8,7 +12,9 @@ describe('AddMonsterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddMonsterComponent ]
+      imports: [ReactiveFormsModule, HttpClientModule, RouterTestingModule],
+      declarations: [ AddMonsterComponent ],
+      providers: [MonsterService]
     })
     .compileComponents();
   }));
