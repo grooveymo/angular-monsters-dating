@@ -100,19 +100,22 @@ router.route('/monsters/:id')
     });
   })
   .get(function(req, res) {
-    console.log('[SPECIFIC] GET/ monster : ', req);
-    Monster.find({ _id: req.params.id }, function(err, monster) {
+    console.log('[FOO] GET/ monster : ', req.params);
+    Monster.findOne({ _id: req.params.id }, function(err, monster) {
       console.log('[FOO] MONSTER: ',monster);
       if (err) {
-        console.log('[ERROR] GET /monster - ' + JSON.stringify(err));
+        console.log('[FOO] ERROR GET /monster - ' + JSON.stringify(err));
         return res.send(err);
       }
       if (!monster || monster.length == 0) {
+        console.log('[FOO] check: ', monster);
         res.status(404)        // HTTP status 404: NotFound
           .send('Not found');
+      } else {
+        console.log('[FOO] FINAL MONSTER: ', monster);
+        res.json(monster);
       }
       
-      res.json(monster);
     });
   })
   .delete(function(req, res) {

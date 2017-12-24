@@ -31,6 +31,7 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log('this.fetchError: ', this.fetchError);
     this.createFormControls();
     this.createForm();
 
@@ -39,7 +40,7 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
       console.log('Error retrieving data', resolvedValue.error);
       this.fetchError = true;
     } else {
-      this.monster = resolvedValue.data[0];
+      this.monster = resolvedValue.data;
       this.populateForm();
     }
   }
