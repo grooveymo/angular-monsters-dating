@@ -51,7 +51,6 @@ export class ViewMonstersComponent implements OnInit, OnDestroy {
       this.router.navigate(['/home']);
       },
       err => {
-        debugger;
         console.log('err =>? ', err);
       });
   }
