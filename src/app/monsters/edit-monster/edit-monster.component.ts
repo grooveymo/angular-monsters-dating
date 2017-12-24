@@ -90,13 +90,13 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
   onSave(): void {
     if (this.editMonsterForm.valid) {
       console.log('Form Submitted!');
+
       const newMonster = new Monster(this.firstName.value, this.lastName.value,
         this.email.value, this.username.value, this.imageFile.value, this.monster._id);
 
-      // console.log('moo: ', newMonster);
-
       this.monsterService.updateMonster(newMonster).subscribe(persistedMonster => {
         console.log('monster persisted: ', persistedMonster);
+        this.router.navigate(['/view-monsters/']);
       });
       this.editMonsterForm.reset();
     }
