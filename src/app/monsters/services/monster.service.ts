@@ -79,7 +79,9 @@ export class MonsterService {
     console.log('about to remove monster', monsterId);
     const path = MONSTERS_REST_API + '/' + monsterId;
     return this.http.delete(path)
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+      // .catch((error: any) => {
+      //   return Observable.throw(error.json().error || 'Server error');
+      // });
 
   }
 

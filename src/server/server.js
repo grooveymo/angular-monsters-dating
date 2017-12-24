@@ -114,17 +114,22 @@ router.route('/monsters/:id')
     });
   })
   .delete(function(req, res) {
+  
+    console.log('[ APPLE**** ] monster to be deleted: ');
+  
     var toBeDeletedId = req.params.id;
     
     console.log('[ APPLE ] monster to be deleted: ', toBeDeletedId);
-    Monster.remove({ _id: toBeDeletedId }, function(err) {
-      if (err) {
+    //Monster.remove({ _id: toBeDeletedId }, function(err) {
+    Monster.findByIdAndRemove({ _id: toBeDeletedId }, function(err, doc) {
+      console.log('doc = ', doc);
+      if (err || !doc) {
         console.log('[ APPLE ] ERROR: DELETE /monster - ' + JSON.stringify(err));
         return res.send(err);
+      } else {
+        console.log('[ APPLE ] remove monster called: ', toBeDeletedId);
+        res.json({ message: 'Successfully deleted', id: toBeDeletedId });
       }
-      console.log('[ APPLE ] remove monster called: ', toBeDeletedId);
-  
-      res.json({ message: 'Successfully deleted', id: toBeDeletedId });
     });
     
   });
@@ -151,7 +156,7 @@ router.route('/monsters/')
     });
   })
   .get(function(req, res) {
-    console.log('[GENERAL] calling GET /monsters/', req);
+//    console.log('[GENERAL] calling GET /monsters/', req);
     console.log('[GENERAL] calling GET /monsters/');
     Monster.find(function(err, contactList) {
       if (err) {

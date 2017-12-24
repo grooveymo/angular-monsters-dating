@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Monster} from '../../monsters/models/monster.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-card',
@@ -14,7 +15,7 @@ export class CardComponent implements OnInit {
   @Output('removeMonster')
   emitRemoveMonster: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor() { }
+  constructor(public router: Router) { }
 
   ngOnInit() {
     console.log('data: ', this.data);
@@ -27,5 +28,9 @@ export class CardComponent implements OnInit {
   removeMonster() {
     console.log('[card] removeMonster: id = ', this.data._id);
     this.emitRemoveMonster.emit(this.data._id)
+  }
+
+  editMonster() {
+    this.router.navigate(['/edit-monster/', this.data._id]);
   }
 }
