@@ -36,6 +36,7 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
     this.createForm();
 
     let resolvedValue = this.route.snapshot.data.monsterData;
+
     if(resolvedValue.hasError()) {
       console.log('Error retrieving data', resolvedValue.error);
       this.fetchError = true;
