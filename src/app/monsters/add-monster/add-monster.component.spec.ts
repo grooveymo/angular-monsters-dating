@@ -1,38 +1,13 @@
 import {AddMonsterComponent} from './add-monster.component';
 import {MonsterService} from '../services/monster.service';
 import {Router} from '@angular/router';
-import createSpyObj = jasmine.createSpyObj;
 import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {RouterTestingModule} from '@angular/router/testing';
 import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/throw';
 
-// describe('AddMonsterComponent', () => {
-//   let component: AddMonsterComponent;
-//   let fixture: ComponentFixture<AddMonsterComponent>;
-//
-//   beforeEach(async(() => {
-//     TestBed.configureTestingModule({
-//       imports: [ReactiveFormsModule, HttpClientModule, RouterTestingModule],
-//       declarations: [AddMonsterComponent],
-//       providers: [MonsterService]
-//     })
-//       .compileComponents();
-//   }));
-//
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(AddMonsterComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
-//
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-//
-//
-// });
+import createSpyObj = jasmine.createSpyObj;
 
 // =================================================================================
 // isolated unit tests to check form validation works as expected
@@ -191,7 +166,6 @@ describe('AddMonsterComponent - shallow tests', () => {
     mockRouter = createSpyObj('Router', ['navigate']);
 
     TestBed.configureTestingModule({
-      // imports: [ReactiveFormsModule, HttpClientModule, RouterTestingModule],
       imports: [ReactiveFormsModule, HttpClientModule],
       declarations: [AddMonsterComponent],
       providers: [MonsterService, {provide: Router, useValue: mockRouter}]
@@ -290,5 +264,43 @@ describe('AddMonsterComponent - shallow tests', () => {
     });
   }));
 
+  it('handles error response returned by server when submitting a REST based form', async(() => {
+
+    let errorResponse = {status: 500};
+
+    expect(component.error).toBeFalsy();
+
+    // set up mocks
+    const err = Observable.throw(errorResponse);
+    const spyOnPostRequest = spyOn(monsterService, 'addMonster')
+      .and.returnValue(err);
+
+    // fill out form correctly
+    enterValidInputs();
+
+    // trigger changes
+    fixture.detectChanges();
+
+    // wait until change detection has fired
+    fixture.whenStable().then(() => {
+      expect(component.addMonsterForm.valid).toBeTruthy();
+
+      // expect 'save' button to be enabled & then click it
+      const button = fixture.nativeElement.querySelector('#addMonsterButton');
+      expect(button.disabled).toBeFalsy();
+      button.click();
+
+      // trigger changes
+      fixture.detectChanges();
+
+      fixture.whenStable().then(() => {
+        expect(button.disabled).toBeFalsy();
+        expect(spyOnPostRequest).toHaveBeenCalled();
+        console.log('ERROR -> ', component.error);
+        expect(component.error).toBeTruthy();
+      });
+
+    });
+  }));
 
 });
