@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MonsterService} from '../services/monster.service';
 import {Monster} from '../models/monster.model';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-add-monster',
   templateUrl: './add-monster.component.html',
   styleUrls: ['./add-monster.component.css']
 })
-export class AddMonsterComponent implements OnInit {
+export class AddMonsterComponent implements OnInit, OnDestroy {
 
   addMonsterForm: FormGroup;
   firstName: FormControl;
@@ -18,6 +19,9 @@ export class AddMonsterComponent implements OnInit {
   email: FormControl;
   username: FormControl;
   imageFile: FormControl;
+
+  addMonsterSubscription: Subscription;
+
 
   readonly REGEX_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -37,14 +41,8 @@ export class AddMonsterComponent implements OnInit {
   createFormControls(): void {
     this.firstName = new FormControl('', [Validators.required, Validators.minLength(5)]);
     this.lastName = new FormControl('', [Validators.required, Validators.minLength(5)]);
-    this.email = new FormControl('', [
-      Validators.required,
-      Validators.pattern(this.REGEX_EMAIL)
-    ]);
-    this.username = new FormControl('', [
-      Validators.required,
-      Validators.pattern(this.REGEX_USERNAME)
-    ]);
+    this.email = new FormControl('', [Validators.required, Validators.pattern(this.REGEX_EMAIL)]);
+    this.username = new FormControl('', [Validators.required, Validators.pattern(this.REGEX_USERNAME)]);
     this.imageFile = new FormControl('');
   }
 
@@ -73,13 +71,19 @@ export class AddMonsterComponent implements OnInit {
       const newMonster = new Monster(this.firstName.value, this.lastName.value,
         this.email.value, this.username.value, this.imageFile.value);
 
-      this.monsterService.addMonster(newMonster).subscribe(persistedMonster => {
-        console.log('monster persisted: ', persistedMonster);
+      this.addMonsterSubscription = this.monsterService.addMonster(newMonster).subscribe(persistedMonster => {
         this.addMonsterForm.reset();
         this.router.navigate(['/view-monsters/']);
 
       });
     }
   }
+
+  ngOnDestroy(): void {
+    if (this.addMonsterSubscription) {
+      this.addMonsterSubscription.unsubscribe();
+    }
+  }
+
 
 }

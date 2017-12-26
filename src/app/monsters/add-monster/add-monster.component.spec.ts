@@ -2,6 +2,11 @@ import {AddMonsterComponent} from './add-monster.component';
 import {MonsterService} from '../services/monster.service';
 import {Router} from '@angular/router';
 import createSpyObj = jasmine.createSpyObj;
+import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
+import {ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {RouterTestingModule} from '@angular/router/testing';
+import {Observable} from 'rxjs/Observable';
 
 // describe('AddMonsterComponent', () => {
 //   let component: AddMonsterComponent;
@@ -29,8 +34,11 @@ import createSpyObj = jasmine.createSpyObj;
 //
 // });
 
-// ================================================
-fdescribe('AddMonsterComponent - isolated tests', () => {
+// =================================================================================
+// isolated unit tests to check form validation works as expected
+// =================================================================================
+
+describe('AddMonsterComponent - isolated tests', () => {
 
   let component: AddMonsterComponent;
   let firstName;
@@ -40,8 +48,8 @@ fdescribe('AddMonsterComponent - isolated tests', () => {
 
 
   beforeEach(() => {
-    let mockMonsterService = createSpyObj('MonsterService',['addMonster']);
-    let mockRouter = createSpyObj('Router',['navigate']);
+    let mockMonsterService = createSpyObj('MonsterService', ['addMonster']);
+    let mockRouter = createSpyObj('Router', ['navigate']);
     component = new AddMonsterComponent(mockMonsterService, mockRouter);
     component.ngOnInit();
   });
@@ -161,5 +169,126 @@ fdescribe('AddMonsterComponent - isolated tests', () => {
     });
 
   });
+
+});
+
+
+// =================================================================================
+// shallow unit tests to check
+// - save button is disabled when the form is in an invalid state
+// - form submission works as expected in the absence/presence of server errors
+// =================================================================================
+
+describe('AddMonsterComponent - shallow tests', () => {
+
+  let component: AddMonsterComponent;
+  let fixture: ComponentFixture<AddMonsterComponent>;
+  let monsterService: MonsterService;
+  let mockRouter;
+
+  beforeEach(async(() => {
+
+    mockRouter = createSpyObj('Router', ['navigate']);
+
+    TestBed.configureTestingModule({
+      // imports: [ReactiveFormsModule, HttpClientModule, RouterTestingModule],
+      imports: [ReactiveFormsModule, HttpClientModule],
+      declarations: [AddMonsterComponent],
+      providers: [MonsterService, {provide: Router, useValue: mockRouter}]
+    })
+      .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AddMonsterComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  beforeEach(inject([MonsterService],
+    (monsterServiceIn) => {
+      monsterService = monsterServiceIn;
+
+    }));
+
+  afterEach(() => {
+    component.ngOnDestroy();
+  });
+
+  function enterValidInputs() {
+    component.addMonsterForm.get('name.firstName').setValue('frank');
+    component.addMonsterForm.get('name.lastName').setValue('instein');
+    component.addMonsterForm.get('username').setValue('frankie');
+    component.addMonsterForm.get('email').setValue('frankie@monster.com');
+    component.addMonsterForm.get('imageFile').setValue('icon11.png');
+  }
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('save button is disabled when the form is in an invalid state', async(() => {
+    fixture.detectChanges();
+    expect(component.addMonsterForm.valid).toBeFalsy();
+    const button = fixture.nativeElement.querySelector('#addMonsterButton');
+    expect(button.disabled).toBeTruthy();
+  }));
+
+  it('save button is enabled when the form is in a valid state', async(() => {
+    fixture.detectChanges();
+    expect(component.addMonsterForm.valid).toBeFalsy();
+    const button = fixture.nativeElement.querySelector('#addMonsterButton');
+    expect(button.disabled).toBeTruthy();
+
+    // fill out form correctly
+    enterValidInputs();
+
+    // trigger changes
+    fixture.detectChanges();
+
+    fixture.whenStable().then(() => {
+      expect(component.addMonsterForm.valid).toBeTruthy();
+
+      // expect 'save' button to be enabled & then click on it
+      const button = fixture.nativeElement.querySelector('#addMonsterButton');
+      expect(button.disabled).toBeFalsy();
+    });
+
+  }));
+
+  it('handles successful form submission', async(() => {
+    // set up mocks
+    const obs = Observable.create(observer => {
+      observer.next({message: 'success'});
+    });
+    const spyOnPostRequest = spyOn(monsterService, 'addMonster')
+      .and.returnValue(obs);
+
+    // fill out form correctly
+    enterValidInputs();
+
+    // trigger changes
+    fixture.detectChanges();
+
+    // wait until change detection has fired
+    fixture.whenStable().then(() => {
+      expect(component.addMonsterForm.valid).toBeTruthy();
+
+      // expect 'save' button to be enabled & then click on it
+      const button = fixture.nativeElement.querySelector('#addMonsterButton');
+      expect(button.disabled).toBeFalsy();
+      button.click();
+
+      // trigger changes
+      fixture.detectChanges();
+
+      fixture.whenStable().then(() => {
+        expect(button.disabled).toBeTruthy();  // form will be reset and consequently save button disabled
+        expect(spyOnPostRequest).toHaveBeenCalled();
+        expect(mockRouter.navigate).toHaveBeenCalledWith(['/view-monsters/'])
+      });
+    });
+  }));
+
 
 });
