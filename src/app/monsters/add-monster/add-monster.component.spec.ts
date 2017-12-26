@@ -134,4 +134,32 @@ fdescribe('AddMonsterComponent - isolated tests', () => {
 
   });
 
+  describe('should validate userName Field', () => {
+
+    beforeEach(() => {
+      username = component.addMonsterForm.get('username');
+    });
+
+    it('should accept legitimate value', () => {
+      username.setValue('abc123');
+      expect(username.valid).toBeTruthy();
+      expect(username.errors).toBeNull();
+    });
+
+    it('should complain that field is required if empty', () => {
+      username.setValue('');
+      expect(username.valid).toBeFalsy();
+      let errors = username.errors;
+      expect(errors['required']).toBeTruthy();
+    });
+
+    it('should complain when supplied with an invalid value', () => {
+      username.setValue('abc@');
+      expect(username.valid).toBeFalsy();
+      let errors = username.errors;
+      expect(errors['pattern']).toBeTruthy();
+    });
+
+  });
+
 });
