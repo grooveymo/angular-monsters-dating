@@ -12,7 +12,7 @@ export class ActivatedRouteStub {
    */
   constructor(public resolvedData: any) {}
 
-  snapshot() {
+  get snapshot() {
     return {
       paramMap: {
         get() {
@@ -27,7 +27,7 @@ export class ActivatedRouteStub {
    * Returns data passed in via constructor
    * @return {Observable<any>} data returned when client performs route.data.subscribe()
    */
-  data() {
+  get data() {
     return Observable.of(this.resolvedData);
   }
 

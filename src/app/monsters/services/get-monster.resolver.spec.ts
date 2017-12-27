@@ -10,7 +10,7 @@ import {EditMonsterComponent} from '../edit-monster/edit-monster.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ActivatedRouteStub} from '../../../../test/activated-route.stub';
 
-fdescribe('GetMonsterResolverService', () => {
+describe('GetMonsterResolverService', () => {
 
   const REST_API_URI = 'http://localhost:8080/';
   // const data = JSON.parse(ORDER_RESPONSE);
@@ -63,7 +63,7 @@ fdescribe('GetMonsterResolverService', () => {
 
     // mock ActivatedRouterSnapshot
     let activatedRouteStub = new ActivatedRouteStub(null);
-    let snapshotStub = activatedRouteStub.snapshot();
+    let snapshotStub = activatedRouteStub.snapshot;
 
     // call resolver function
     const response = getMonsterResolver.resolve(snapshotStub as any);
@@ -84,7 +84,7 @@ fdescribe('GetMonsterResolverService', () => {
 
     // mock ActivatedRouterSnapshot
     let activatedRouteStub = new ActivatedRouteStub(null);
-    let snapshotStub = activatedRouteStub.snapshot();
+    let snapshotStub = activatedRouteStub.snapshot;
 
     const response = getMonsterResolver.resolve(snapshotStub as any);
     expect(response).toBeTruthy();
