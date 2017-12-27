@@ -3,7 +3,6 @@
  * mocks out ActivatedRoute.snapshot.params
  */
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
 
 export class ActivatedRouteStub {
 
@@ -13,22 +12,22 @@ export class ActivatedRouteStub {
    */
   constructor(public resolvedData: any) {}
 
-  get snapshot() {
+  snapshot() {
     return {
       paramMap: {
         get() {
-          return null;
+          return 'abc123';
         }
       },
       data: this.resolvedData
-    };
+    }
   }
 
   /**
    * Returns data passed in via constructor
    * @return {Observable<any>} data returned when client performs route.data.subscribe()
    */
-  get data() {
+  data() {
     return Observable.of(this.resolvedData);
   }
 
