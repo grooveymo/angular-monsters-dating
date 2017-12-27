@@ -3,13 +3,10 @@ import {async, inject, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientModule, HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-//import {ORDER_RESPONSE} from './mock_order_json';
 import {ResolvedValue} from '../../shared/types/resolved-value.type';
 import {MonsterService} from './monster.service';
 import {GetMonsterResolver} from './get-monster.resolver';
 import {EditMonsterComponent} from '../edit-monster/edit-monster.component';
-import {ActivatedRouteSnapshot} from '@angular/router';
-import createSpyObj = jasmine.createSpyObj;
 import {ReactiveFormsModule} from '@angular/forms';
 import {ActivatedRouteStub} from '../../../../test/activated-route.stub';
 
@@ -58,42 +55,45 @@ fdescribe('GetMonsterResolverService', () => {
 
   it('should handle successful data retrieval', async(() => {
 
-    expect(getMonsterResolver).toBeTruthy();
-
+    // mock response from server returned by service
     const obs = Observable.create(observer => {
       observer.next(data);
     });
     const spy = spyOn(monstersService, 'getMonster').and.returnValue(obs);
 
+    // mock ActivatedRouterSnapshot
     let activatedRouteStub = new ActivatedRouteStub(null);
     let snapshotStub = activatedRouteStub.snapshot();
 
+    // call resolver function
     const response = getMonsterResolver.resolve(snapshotStub as any);
 
     expect(response).toBeTruthy();
     response.subscribe(result => {
       expect(result).toBeTruthy();
       expect(result).toEqual(successfulResolve);
-      expect(spy).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalledWith('abc123');
     });
 
   }));
 
-  // it('should handle failure to retrieve data', () => {
-  //
-  //   expect(ordersResolverService).toBeTruthy();
-  //
-  //   const err = Observable.throw(customError);
-  //   const spy = spyOn(monstersService, 'getOrders').and.returnValue(err);
-  //
-  //   const response = ordersResolverService.resolve();
-  //   expect(response).toBeTruthy();
-  //   response.subscribe(result => {
-  //     expect(result).toBeTruthy();
-  //     expect(result).toEqual(resolvedError);
-  //     expect(spy).toHaveBeenCalled();
-  //   });
-  //
-  // });
+  it('should handle failure to retrieve data', () => {
+
+    const err = Observable.throw(customError);
+    const spy = spyOn(monstersService, 'getMonster').and.returnValue(err);
+
+    // mock ActivatedRouterSnapshot
+    let activatedRouteStub = new ActivatedRouteStub(null);
+    let snapshotStub = activatedRouteStub.snapshot();
+
+    const response = getMonsterResolver.resolve(snapshotStub as any);
+    expect(response).toBeTruthy();
+    response.subscribe(result => {
+      expect(result).toBeTruthy();
+      expect(result).toEqual(resolvedError);
+      expect(spy).toHaveBeenCalled();
+    });
+
+  });
 
 });
