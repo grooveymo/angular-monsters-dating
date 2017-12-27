@@ -14,8 +14,8 @@ import {Observable} from 'rxjs/Observable';
 import createSpyObj = jasmine.createSpyObj;
 
 /**
- * I've not implemented many tests aside from the basic 'should create', because the form component here is identical to
- * the one presented on the AddMonsters page which provides more rigorous testing. Both AddMonster and EditMonster pages
+ * I've not implemented any field validation tests, because the form component here is identical to the one
+ * presented on the AddMonsters page which provides more rigorous testing. Both AddMonster and EditMonster pages
  * could be refactored to use a common component.
  */
 describe('EditMonsterComponent', () => {
@@ -48,6 +48,23 @@ describe('EditMonsterComponent', () => {
     expect(component).toBeTruthy();
     expect(component.fetchError).toBeFalsy();
   });
+
+  it('form should be populated & valid at the start', () => {
+
+    // trigger changes
+    fixture.detectChanges();
+
+    expect(component.editMonsterForm.valid).toBeTruthy();
+    expect(component.editMonsterForm.get('name.firstName').value).toBe('firstName');
+    expect(component.editMonsterForm.get('name.lastName').value).toBe('lastName');
+    expect(component.editMonsterForm.get('email').value).toBe('first@lastname.com');
+    expect(component.editMonsterForm.get('username').value).toBe('username');
+    expect(component.editMonsterForm.get('imageFile').value).toBe('icon01.png');
+  });
+
+  //TODO - need test for displaying error message when experiencing a failed resolve
+
+
 });
 
 
