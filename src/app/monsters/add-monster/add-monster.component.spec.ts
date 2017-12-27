@@ -201,106 +201,109 @@ describe('AddMonsterComponent - shallow tests', () => {
     expect(component).toBeTruthy();
   });
 
-  it('save button is disabled when the form is in an invalid state', async(() => {
-    fixture.detectChanges();
-    expect(component.addMonsterForm.valid).toBeFalsy();
-    const button = fixture.nativeElement.querySelector('#addMonsterButton');
-    expect(button.disabled).toBeTruthy();
-  }));
-
-  it('save button is enabled when the form is in a valid state', async(() => {
-    fixture.detectChanges();
-    expect(component.addMonsterForm.valid).toBeFalsy();
-    const button = fixture.nativeElement.querySelector('#addMonsterButton');
-    expect(button.disabled).toBeTruthy();
-
-    // fill out form correctly
-    enterValidInputs();
-
-    // trigger changes
-    fixture.detectChanges();
-
-    fixture.whenStable().then(() => {
-      expect(component.addMonsterForm.valid).toBeTruthy();
-
-      // expect 'save' button to be enabled & then click on it
+  describe('save button', () => {
+    it('is disabled when the form is in an invalid state', async(() => {
+      fixture.detectChanges();
+      expect(component.addMonsterForm.valid).toBeFalsy();
       const button = fixture.nativeElement.querySelector('#addMonsterButton');
-      expect(button.disabled).toBeFalsy();
-    });
-
-  }));
-
-  it('handles successful form submission', async(() => {
-    // set up mocks
-    const obs = Observable.create(observer => {
-      observer.next({message: 'success'});
-    });
-    const spyOnPostRequest = spyOn(monsterService, 'addMonster')
-      .and.returnValue(obs);
-
-    // fill out form correctly
-    enterValidInputs();
-
-    // trigger changes
-    fixture.detectChanges();
-
-    // wait until change detection has fired
-    fixture.whenStable().then(() => {
-      expect(component.addMonsterForm.valid).toBeTruthy();
-
-      // expect 'save' button to be enabled & then click on it
+      expect(button.disabled).toBeTruthy();
+    }));
+    it('is enabled when the form is in a valid state', async(() => {
+      fixture.detectChanges();
+      expect(component.addMonsterForm.valid).toBeFalsy();
       const button = fixture.nativeElement.querySelector('#addMonsterButton');
-      expect(button.disabled).toBeFalsy();
-      button.click();
+      expect(button.disabled).toBeTruthy();
+
+      // fill out form correctly
+      enterValidInputs();
 
       // trigger changes
       fixture.detectChanges();
 
       fixture.whenStable().then(() => {
-        expect(button.disabled).toBeTruthy();  // form will be reset and consequently save button disabled
-        expect(spyOnPostRequest).toHaveBeenCalled();
-        expect(mockRouter.navigate).toHaveBeenCalledWith(['/view-monsters/'])
-      });
-    });
-  }));
+        expect(component.addMonsterForm.valid).toBeTruthy();
 
-  it('handles error response returned by server when submitting a REST based form', async(() => {
-
-    let errorResponse = {status: 500};
-
-    expect(component.error).toBeFalsy();
-
-    // set up mocks
-    const err = Observable.throw(errorResponse);
-    const spyOnPostRequest = spyOn(monsterService, 'addMonster')
-      .and.returnValue(err);
-
-    // fill out form correctly
-    enterValidInputs();
-
-    // trigger changes
-    fixture.detectChanges();
-
-    // wait until change detection has fired
-    fixture.whenStable().then(() => {
-      expect(component.addMonsterForm.valid).toBeTruthy();
-
-      // expect 'save' button to be enabled & then click it
-      const button = fixture.nativeElement.querySelector('#addMonsterButton');
-      expect(button.disabled).toBeFalsy();
-      button.click();
-
-      // trigger changes
-      fixture.detectChanges();
-
-      fixture.whenStable().then(() => {
+        // expect 'save' button to be enabled & then click on it
+        const button = fixture.nativeElement.querySelector('#addMonsterButton');
         expect(button.disabled).toBeFalsy();
-        expect(spyOnPostRequest).toHaveBeenCalled();
-        console.log('ERROR -> ', component.error);
-        expect(component.error).toBeTruthy();
       });
 
-    });
-  }));
+    }));
+  });
+
+  describe('form submission', () => {
+    it('should handle successful POST', async(() => {
+      // set up mocks
+      const obs = Observable.create(observer => {
+        observer.next({message: 'success'});
+      });
+      const spyOnPostRequest = spyOn(monsterService, 'addMonster')
+        .and.returnValue(obs);
+
+      // fill out form correctly
+      enterValidInputs();
+
+      // trigger changes
+      fixture.detectChanges();
+
+      // wait until change detection has fired
+      fixture.whenStable().then(() => {
+        expect(component.addMonsterForm.valid).toBeTruthy();
+
+        // expect 'save' button to be enabled & then click on it
+        const button = fixture.nativeElement.querySelector('#addMonsterButton');
+        expect(button.disabled).toBeFalsy();
+        button.click();
+
+        // trigger changes
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+          expect(button.disabled).toBeTruthy();  // form will be reset and consequently save button disabled
+          expect(spyOnPostRequest).toHaveBeenCalled();
+          expect(mockRouter.navigate).toHaveBeenCalledWith(['/view-monsters/'])
+        });
+      });
+    }));
+    it('should handle error response returned by server', async(() => {
+
+      let errorResponse = {status: 500};
+
+      expect(component.error).toBeFalsy();
+
+      // set up mocks
+      const err = Observable.throw(errorResponse);
+      const spyOnPostRequest = spyOn(monsterService, 'addMonster')
+        .and.returnValue(err);
+
+      // fill out form correctly
+      enterValidInputs();
+
+      // trigger changes
+      fixture.detectChanges();
+
+      // wait until change detection has fired
+      fixture.whenStable().then(() => {
+        expect(component.addMonsterForm.valid).toBeTruthy();
+
+        // expect 'save' button to be enabled & then click it
+        const button = fixture.nativeElement.querySelector('#addMonsterButton');
+        expect(button.disabled).toBeFalsy();
+        button.click();
+
+        // trigger changes
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+          expect(button.disabled).toBeFalsy();
+          expect(spyOnPostRequest).toHaveBeenCalled();
+          console.log('ERROR -> ', component.error);
+          expect(component.error).toBeTruthy();
+        });
+
+      });
+    }));
+  });
+
 
 });
