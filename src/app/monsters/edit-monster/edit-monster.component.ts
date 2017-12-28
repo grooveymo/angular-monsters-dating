@@ -23,6 +23,7 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
   imageFile: FormControl;
 
   fetchError = false;
+  editMonsterSubscription: Subscription;
 
   readonly REGEX_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   readonly REGEX_USERNAME = '^[a-zA-Z0-9_]*$';
@@ -90,6 +91,9 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if(this.editMonsterSubscription) {
+      this.editMonsterSubscription.unsubscribe();
+    }
   }
 
   onSave(): void {
@@ -99,7 +103,7 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
       const newMonster = new Monster(this.firstName.value, this.lastName.value,
         this.email.value, this.username.value, this.imageFile.value, this.monster._id);
 
-      this.monsterService.updateMonster(newMonster).subscribe(persistedMonster => {
+      this.editMonsterSubscription = this.monsterService.updateMonster(newMonster).subscribe(persistedMonster => {
         console.log('monster persisted: ', persistedMonster);
         this.router.navigate(['/view-monsters/']);
       });
