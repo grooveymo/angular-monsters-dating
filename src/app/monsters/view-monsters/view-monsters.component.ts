@@ -36,13 +36,13 @@ export class ViewMonstersComponent implements OnInit, OnDestroy {
     }
   }
 
-  editMonster(id: string): void {
-    console.log('editing: ', id);
-    this.router.navigate(['/edit-monster/', id]);
+  editMonster($event): void {
+    console.log('[viewMonsters] editing: ', $event);
+    this.router.navigate(['/edit-monster/', $event]);
   }
 
   removeMonster($event): void {
-    console.log('[parent] removeMonster: id = ', $event);
+    console.log('[viewMonsters] removeMonster: id = ', $event);
 
     console.log('removing: ', $event);
     let id = $event;

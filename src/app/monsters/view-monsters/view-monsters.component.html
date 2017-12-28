@@ -1,5 +1,5 @@
 <div *ngIf="fetchError">
-  <div id='errorMessage'  class="alert alert-danger" role="alert">
+  <div id='errorMessage' class="alert alert-danger" role="alert">
     There was a problem retrieving data. Please try again and contact an administrator if this problem persists.
   </div>
 </div>
@@ -14,7 +14,10 @@
 <ng-template #show_content>
   <div class="card-columns">
     <div *ngFor="let monster of monsters" style="margin: 5px">
-      <app-card [data-input]="monster" (removeMonster)="removeMonster($event)"></app-card>
+      <app-card [data-input]="monster"
+                (editMonster)="editMonster($event)"
+                (removeMonster)="removeMonster($event)">
+      </app-card>
     </div>
   </div>
 </ng-template>

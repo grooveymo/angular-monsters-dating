@@ -15,6 +15,9 @@ export class CardComponent implements OnInit {
   @Output('removeMonster')
   emitRemoveMonster: EventEmitter<string> = new EventEmitter<string>();
 
+  @Output('editMonster')
+  emitEditMonster: EventEmitter<string> = new EventEmitter<string>();
+
   constructor(public router: Router) { }
 
   ngOnInit() {
@@ -31,6 +34,7 @@ export class CardComponent implements OnInit {
   }
 
   editMonster() {
-    this.router.navigate(['/edit-monster/', this.data._id]);
+//    this.router.navigate(['/edit-monster/', this.data._id]);
+    this.emitEditMonster.emit(this.data._id)
   }
 }
