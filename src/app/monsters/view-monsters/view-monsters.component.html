@@ -1,7 +1,13 @@
-<div *ngIf="(monsters.length == 0);else show_content ">
-  <div class="alert alert-danger" role="alert">
-    <strong>Oops</strong> There are no monsters in the database at the moment. Please
-    <a routerLink="/add-monster">add one</a>
+<div *ngIf="fetchError">
+  <div id='errorMessage'  class="alert alert-danger" role="alert">
+    There was a problem retrieving data. Please try again and contact an administrator if this problem persists.
+  </div>
+</div>
+
+
+<div *ngIf="(!fetchError && monsters.length == 0);else show_content ">
+  <div id='noMonstersMessage' class="alert alert-warning" role="alert">
+    There are no monsters in the database at the moment. Please <a routerLink="/add-monster">add one</a>
   </div>
 </div>
 

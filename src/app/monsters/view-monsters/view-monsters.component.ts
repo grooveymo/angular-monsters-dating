@@ -12,6 +12,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class ViewMonstersComponent implements OnInit, OnDestroy {
 
   monsters: Monster[] = [];
+  fetchError = false;
 
   constructor(private router: Router, private monsterService: MonsterService, private route: ActivatedRoute) {
   }
@@ -20,6 +21,7 @@ export class ViewMonstersComponent implements OnInit, OnDestroy {
     let resolvedValue = this.route.snapshot.data.monstersData;
     if (resolvedValue.hasError()) {
       console.log('Error retrieving data', resolvedValue.error);
+      this.fetchError = true;
     } else {
       this.monsters = resolvedValue.data;
       console.log('monsters retrieved => ', this.monsters);
@@ -33,13 +35,6 @@ export class ViewMonstersComponent implements OnInit, OnDestroy {
     console.log('editing: ', id);
     this.router.navigate(['/edit-monster/', id]);
   }
-
-  // removeMonster(id: string): void {
-  //   console.log('removing: ', id);
-  //   this.monsterService.removeMonster(id).subscribe(response => {
-  //     console.log('monsters retrieved => ', response);
-  //   });
-  // }
 
   removeMonster($event): void {
     console.log('[parent] removeMonster: id = ', $event);
