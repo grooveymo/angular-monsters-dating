@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
 
 import {ViewMonstersComponent} from './view-monsters.component';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -7,10 +7,12 @@ import {HttpClientModule, HttpErrorResponse} from '@angular/common/http';
 import {Monster} from '../models/monster.model';
 import {ActivatedRouteStub} from '../../../../test/activated-route.stub';
 import {ResolvedValue} from '../../shared/types/resolved-value.type';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {By} from '@angular/platform-browser';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
+import createSpyObj = jasmine.createSpyObj;
+import {Observable} from 'rxjs/Observable';
 
 describe('ViewMonstersComponent', () => {
   let component: ViewMonstersComponent;
@@ -37,13 +39,15 @@ describe('ViewMonstersComponent', () => {
 
   describe('after a successful resolve, ', () => {
 
+    let monsterService;
+
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [ReactiveFormsModule, HttpClientModule, RouterTestingModule],
-        declarations: [ ViewMonstersComponent ],
+        declarations: [ViewMonstersComponent],
         providers: [MonsterService,
           {provide: ActivatedRoute, useValue: activatedRouteStubWithSuccess}],
-        schemas:[NO_ERRORS_SCHEMA] // NOTE - have to supply this otherwise angular will complain
+        schemas: [NO_ERRORS_SCHEMA] // NOTE - have to supply this otherwise angular will complain
       })
         .compileComponents();
     }));
@@ -53,6 +57,11 @@ describe('ViewMonstersComponent', () => {
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
+
+    beforeEach(inject([MonsterService],
+      (monsterServiceIn) => {
+        monsterService = monsterServiceIn;
+      }));
 
     it('should create', () => {
       expect(component).toBeTruthy();
@@ -85,18 +94,34 @@ describe('ViewMonstersComponent', () => {
       expect(cardElement['data-input']).toBe(monster);
     });
 
-  });
+    it('should be able to remove Monster', () => {
 
+      // create spy for monsterService.remove()
+      const obs = Observable.create(observer => {
+        observer.next({message: 'success', status: 200});
+      });
+      let mockMonsterServiceSpy = spyOn(monsterService, 'removeMonster').and.returnValue(obs);
+
+      // create spy for router.navigate()
+      let navigateSpy = spyOn((<any>component).router, 'navigate');
+
+      // trigger removal
+      component.removeMonster('abc123');
+
+      expect(mockMonsterServiceSpy).toHaveBeenCalledWith('abc123');
+      expect(navigateSpy).toHaveBeenCalledWith(['/home']);
+    });
+  });
 
   describe('after a failed resolve, ', () => {
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [ReactiveFormsModule, HttpClientModule, RouterTestingModule],
-        declarations: [ ViewMonstersComponent ],
+        declarations: [ViewMonstersComponent],
         providers: [MonsterService,
           {provide: ActivatedRoute, useValue: activatedRouteStubWithFailure}],
-        schemas:[NO_ERRORS_SCHEMA] // NOTE - have to supply this otherwise angular will complain
+        schemas: [NO_ERRORS_SCHEMA] // NOTE - have to supply this otherwise angular will complain
       })
         .compileComponents();
     }));
@@ -145,10 +170,10 @@ describe('ViewMonstersComponent', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [ReactiveFormsModule, HttpClientModule, RouterTestingModule],
-        declarations: [ ViewMonstersComponent ],
+        declarations: [ViewMonstersComponent],
         providers: [MonsterService,
           {provide: ActivatedRoute, useValue: activatedRouteStubWithSuccessAndEmpty}],
-        schemas:[NO_ERRORS_SCHEMA] // NOTE - have to supply this otherwise angular will complain
+        schemas: [NO_ERRORS_SCHEMA] // NOTE - have to supply this otherwise angular will complain
       })
         .compileComponents();
     }));

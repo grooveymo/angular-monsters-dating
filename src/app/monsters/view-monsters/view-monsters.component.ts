@@ -14,6 +14,8 @@ export class ViewMonstersComponent implements OnInit, OnDestroy {
   monsters: Monster[] = [];
   fetchError = false;
 
+  removeMonsterSubscription: Subscription;
+
   constructor(private router: Router, private monsterService: MonsterService, private route: ActivatedRoute) {
   }
 
@@ -29,6 +31,9 @@ export class ViewMonstersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if(this.removeMonsterSubscription) {
+      this.removeMonsterSubscription.unsubscribe();
+    }
   }
 
   editMonster(id: string): void {
@@ -41,7 +46,7 @@ export class ViewMonstersComponent implements OnInit, OnDestroy {
 
     console.log('removing: ', $event);
     let id = $event;
-    this.monsterService.removeMonster(id).subscribe(response => {
+    this.removeMonsterSubscription = this.monsterService.removeMonster(id).subscribe(response => {
         console.log('backend returns response => ', response);
       this.router.navigate(['/home']);
       },
