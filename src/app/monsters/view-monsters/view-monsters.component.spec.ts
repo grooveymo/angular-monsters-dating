@@ -105,12 +105,27 @@ describe('ViewMonstersComponent', () => {
       // create spy for router.navigate()
       let navigateSpy = spyOn((<any>component).router, 'navigate');
 
-      // trigger removal
+      // invoke removal
       component.removeMonster('abc123');
 
       expect(mockMonsterServiceSpy).toHaveBeenCalledWith('abc123');
       expect(navigateSpy).toHaveBeenCalledWith(['/home']);
     });
+
+    it('should be able to edit Monster', () => {
+
+      // create spy for router.navigate()
+      // let navigateSpy = spyOn((<any>component).router, 'navigate');
+
+      let router = TestBed.get(Router);
+      let navigateSpy = spyOn(router, 'navigate');
+
+      // invoke edit
+      component.editMonster('abc123');
+
+      expect(navigateSpy).toHaveBeenCalledWith(['/edit-monster/', 'abc123']);
+    });
+
   });
 
   describe('after a failed resolve, ', () => {

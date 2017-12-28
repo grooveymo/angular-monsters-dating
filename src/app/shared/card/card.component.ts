@@ -34,7 +34,6 @@ export class CardComponent implements OnInit {
   }
 
   editMonster() {
-//    this.router.navigate(['/edit-monster/', this.data._id]);
     this.emitEditMonster.emit(this.data._id)
   }
 }
