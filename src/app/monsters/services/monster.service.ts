@@ -5,7 +5,7 @@ import {Monster} from '../models/monster.model';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-const MONSTERS_REST_API = 'http://localhost:9090/api/monsters';
+export const MONSTERS_REST_API = 'http://localhost:9090/api/monsters';
 
 @Injectable()
 export class MonsterService {
