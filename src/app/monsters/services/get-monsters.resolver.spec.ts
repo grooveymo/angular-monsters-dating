@@ -60,9 +60,6 @@ describe('GetMonstersResolverService', () => {
     });
     const spy = spyOn(monstersService, 'getMonsters').and.returnValue(obs);
 
-    // mock ActivatedRouterSnapshot
-    let activatedRouteStub = new ActivatedRouteStub(null);
-
     // call resolver function
     const response = getMonstersResolver.resolve();
 
@@ -79,9 +76,6 @@ describe('GetMonstersResolverService', () => {
 
     const err = Observable.throw(customError);
     const spy = spyOn(monstersService, 'getMonsters').and.returnValue(err);
-
-    // mock ActivatedRouterSnapshot
-    let activatedRouteStub = new ActivatedRouteStub(null);
 
     const response = getMonstersResolver.resolve();
     expect(response).toBeTruthy();
