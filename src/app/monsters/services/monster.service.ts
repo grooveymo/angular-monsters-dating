@@ -55,7 +55,7 @@ export class MonsterService {
    * @param {Monster} monster
    * @return {Observable<any | any>}
    */
-  updateMonster(monster: Monster) {
+  updateMonster(monster: Monster): Observable<Monster> {
 
     let headers = new HttpHeaders({'Content-Type': 'application/json'});
 
@@ -63,9 +63,9 @@ export class MonsterService {
 
     console.log('inside service with body : ' + JSON.stringify(monster));
     return this.http
-      .put(path, monster,{headers: headers})
-      .catch((error: any) => Observable.throw(error.json().error || 'Server error')
-      );
+      .put<Monster>(path, monster,{headers: headers});
+      // .catch((error: any) => Observable.throw(error.json().error || 'Server error')
+      // );
 
   }
 
@@ -75,14 +75,10 @@ export class MonsterService {
    * @param {string} monsterId
    * @return {Observable<any | any>}
    */
-  removeMonster(monsterId: string) {
+  removeMonster(monsterId: string): Observable<string> {
     console.log('about to remove monster', monsterId);
     const path = MONSTERS_REST_API + '/' + monsterId;
-    return this.http.delete(path)
-      // .catch((error: any) => {
-      //   return Observable.throw(error.json().error || 'Server error');
-      // });
-
+    return this.http.delete<string>(path);
   }
 
 }
