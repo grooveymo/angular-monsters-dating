@@ -40,7 +40,7 @@ describe('MonsterService', () => {
   it('should be created', inject([MonsterService], (service: MonsterService) => {
     expect(service).toBeTruthy();
   }));
-  
+
 
   it('addMonster() should successfully POST new monster details to server', () => {
 
