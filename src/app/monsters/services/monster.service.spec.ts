@@ -40,14 +40,7 @@ describe('MonsterService', () => {
   it('should be created', inject([MonsterService], (service: MonsterService) => {
     expect(service).toBeTruthy();
   }));
-
-
-
-
-
-  // TODO - test removeMonster for sunny day scenario
-  // TODO - test removeMonster for rainy day scenario
-
+  
 
   it('addMonster() should successfully POST new monster details to server', () => {
 
@@ -166,5 +159,32 @@ describe('MonsterService', () => {
 
   });
 
+  it('removeMonster() should successfully remove monster', () => {
+
+    service.removeMonster(id).subscribe((res) => {
+      expect(res.message).toBe('Successfully deleted');
+      expect(res.id).toBe(id);
+    });
+
+    const request = httpMock.expectOne(MONSTERS_REST_API + '/' + id); // instance of TestRequest
+    expect(request.request.method).toBe('DELETE');
+
+    request.flush({ message: 'Successfully deleted', id: id });
+  });
+  it('removeMonster() should throw error is monster cannot be found', () => {
+
+    service.removeMonster(id).subscribe(() => {
+      },
+      err => {
+        expect(err).toBeTruthy();
+        expect(err.status).toBe(404);
+        expect(err.statusText).toBe('No such monster exists');
+      });
+
+    const request = httpMock.expectOne(MONSTERS_REST_API + '/' + id);
+    expect(request.request.method).toBe('DELETE');
+
+    request.error(new ErrorEvent('error'), {status: 404, statusText: 'No such monster exists'});
+  });
 
 });

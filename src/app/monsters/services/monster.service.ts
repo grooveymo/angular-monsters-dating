@@ -75,7 +75,7 @@ export class MonsterService {
    * @param {string} monsterId
    * @return {Observable<any | any>}
    */
-  removeMonster(monsterId: string): Observable<string> {
+  removeMonster(monsterId: string): Observable<any> {
     console.log('about to remove monster', monsterId);
     const path = MONSTERS_REST_API + '/' + monsterId;
     return this.http.delete<string>(path);
