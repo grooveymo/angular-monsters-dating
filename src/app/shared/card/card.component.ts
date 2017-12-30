@@ -29,7 +29,6 @@ export class CardComponent implements OnInit {
   }
 
   removeMonster() {
-    console.log('[card] removeMonster: id = ', this.data._id);
     this.emitRemoveMonster.emit(this.data._id)
   }
 
