@@ -65,6 +65,7 @@ export class AddMonsterComponent implements OnInit, OnDestroy {
    * Save form details
    */
   onSave() {
+    /* istanbul ignore else  */
     if (this.addMonsterForm.valid) {
       console.log('Form Submitted!');
       const newMonster = new Monster(this.firstName.value, this.lastName.value,

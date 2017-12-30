@@ -1,3 +1,4 @@
+ /* istanbul ignore next */
 /**
  * Stub for ActivatedRouter
  * mocks out ActivatedRoute.snapshot.params
@@ -32,3 +33,4 @@ export class ActivatedRouteStub {
   }
 
 }
+
