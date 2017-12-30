@@ -27,24 +27,21 @@ describe('ExpanderDirective', () => {
     imageEl = fixture.debugElement.query(By.css('img'));
   });
 
-  it('should create an instance', () => {
+  it('should create a TestComponent instance with our directive', () => {
     expect(component).toBeTruthy();
   });
 
-  it('hovering over <img> tag', () => {
-    imageEl.triggerEventHandler('mouseover', null);
+  it('hovering over < img > tag adds/removes classes', () => {
+
+    imageEl.triggerEventHandler('mouseenter', null);
     fixture.detectChanges();
+    expect(imageEl.nativeElement.classList).toContain('hover-over');
+    expect(imageEl.nativeElement.classList).not.toContain('no-hover-over');
 
-    console.log(' foo: ',imageEl.nativeElement.classList);
-
-    //expect(imageEl.nativeElement.classList).toContain('hover');
-    // expect(imageEl.nativeElement.style.backgroundColor).toBe('blue');
-
-    imageEl.triggerEventHandler('mouseout', null);
+    imageEl.triggerEventHandler('mouseleave', null);
     fixture.detectChanges();
-    console.log(' bar: ',imageEl.nativeElement.classList);
+    expect(imageEl.nativeElement.classList).toContain('no-hover-over');
+    expect(imageEl.nativeElement.classList).not.toContain('hover-over');
 
-    // console.log(imageEl.nativeElement.style.backgroundColor);
-    // expect(imageEl.nativeElement.style.backgroundColor).toBe('inherit');
   });
 });
