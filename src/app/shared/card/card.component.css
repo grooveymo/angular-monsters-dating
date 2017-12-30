@@ -8,7 +8,7 @@ img{
 }
 
 img:hover {
-  height: 8em;
-  width: 8em;
+  height: 6em;
+  width: 6em;
   margin-left: -50px;
 }
