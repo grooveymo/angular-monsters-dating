@@ -70,6 +70,10 @@ describe('CardComponent', () => {
 
   });
 
+  // **************************************************************************************************************************
+  // TODO - need to locate edit button other than using id (#editButton) since we'll have multiple instances of
+  // card component on ViewComponets page. Same applies to remove button
+  // **************************************************************************************************************************
   describe('should handle @Output', () => {
 
       it('should emit edit event', () => {
