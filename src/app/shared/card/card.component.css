@@ -1,4 +1,4 @@
-img{
+.no-hover-over{
   height: 5em;
   width: 5em;
   margin: 15px 0;
@@ -7,7 +7,24 @@ img{
   -o-transition: all 1s ease;
 }
 
-img:hover {
-  height: 6em;
-  width: 6em;
+.hover-over {
+  height: 8em;
+  width: 8em;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
 }
+
+/*img{*/
+  /*height: 5em;*/
+  /*width: 5em;*/
+  /*margin: 15px 0;*/
+  /*-webkit-transition: all 1s ease;*/
+  /*-moz-transition: all 1s ease;*/
+  /*-o-transition: all 1s ease;*/
+/*}*/
+
+/*img:hover {*/
+  /*height: 6em;*/
+  /*width: 6em;*/
+/*}*/

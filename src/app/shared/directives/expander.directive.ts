@@ -8,24 +8,32 @@ export class ExpanderDirective {
   constructor(private renderer: Renderer2, private el: ElementRef) { }
 
   @HostListener('mouseenter') onMouseEnter() {
+    console.log('---> mouse enter: ');
     this.doExpand(true);
   }
 
   @HostListener('mouseleave') onMouseLeave() {
+    console.log('---> mouse leave: ');
     this.doExpand(false);
   }
 
   doExpand(isExpandable: boolean): void {
 
     if(isExpandable) {
-//      this.renderer.setStyle(this.el.nativeElement, 'text-decoration', 'underline');
-      this.renderer.addClass(this.el.nativeElement, 'hover');
-//      setStyle(this.el.nativeElement, 'text-decoration', 'underline');
-
+      console.log('mouse enter: ', isExpandable);
+      this.renderer.addClass(this.el.nativeElement, 'hover-over');
+      this.renderer.removeClass(this.el.nativeElement, 'no-hover-over');
     } else {
-//      this.renderer.setStyle(this.el.nativeElement, 'text-decoration', 'none');
-      this.renderer.removeClass(this.el.nativeElement, 'hover');
+      console.log('mouse leave: ', isExpandable);
+      this.renderer.removeClass(this.el.nativeElement, 'hover-over');
+      this.renderer.addClass(this.el.nativeElement, 'no-hover-over');
     }
+
+    // if(isExpandable) {
+    //   this.renderer.addClass(this.el.nativeElement, 'hover-over');
+    // } else {
+    //   this.renderer.removeClass(this.el.nativeElement, 'hover-over');
+    // }
   }
 
 }
