@@ -7,6 +7,7 @@ import {ViewMonstersComponent} from './monsters/view-monsters/view-monsters.comp
 import {EditMonsterComponent} from './monsters/edit-monster/edit-monster.component';
 import {GetMonstersResolver} from './monsters/services/get-monsters.resolver';
 import {GetMonsterResolver} from './monsters/services/get-monster.resolver';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 
 // declare app routes (note should not have leading slash)
 const appRoutes: Routes = [
@@ -14,7 +15,10 @@ const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'add-monster', component: AddMonsterComponent},
   {path: 'view-monsters', component: ViewMonstersComponent, resolve: { monstersData: GetMonstersResolver }},
-  {path : 'edit-monster/:id', component : EditMonsterComponent, resolve: { monsterData: GetMonsterResolver }}
+  {path : 'edit-monster/:id', component : EditMonsterComponent, resolve: { monsterData: GetMonsterResolver }},
+
+  {path: '404', component: PageNotFoundComponent},
+  {path: '**', redirectTo: '/404'}
 ];
 
 @NgModule({
