@@ -20,7 +20,7 @@ describe('ViewMonstersComponent', () => {
   let component: ViewMonstersComponent;
   let fixture: ComponentFixture<ViewMonstersComponent>;
   const monster = new Monster('firstName', 'lastName', 'first@lastname.com',
-    'username', 'icon01.png', '','abc123');
+    'username', 'icon01.png', 'something cheesy', 'abc123');
   const ERROR_MESSAGE = 'Unknown Error';
   const ERROR_STATUS = 0;
 
@@ -255,7 +255,7 @@ describe('ViewMonstersComponent', () => {
         declarations: [ViewMonstersComponent, CardComponent, CapitalizeNamePipe],
         providers: [MonsterService,
           {provide: ActivatedRoute, useValue: activatedRouteStubWithSuccess}],
-         // schemas: [NO_ERRORS_SCHEMA] // No longer required since we're performing integration style testing and have
+        // schemas: [NO_ERRORS_SCHEMA] // No longer required since we're performing integration style testing and have
         // declared the other components/pipes above
       })
         .compileComponents();
@@ -288,34 +288,38 @@ describe('ViewMonstersComponent', () => {
     it('should display details for single monster (will test flow of data from parent to child component)',
       () => {
 
-      // trigger changes
-      fixture.detectChanges();
+        // trigger changes
+        fixture.detectChanges();
 
-      // expect 'No monsters in database' message to not exist in DOM
-      const noMonsterMessage = fixture.nativeElement.querySelector('#noMonstersMessage');
-      expect(noMonsterMessage).toBeNull();
+        // expect 'No monsters in database' message to not exist in DOM
+        const noMonsterMessage = fixture.nativeElement.querySelector('#noMonstersMessage');
+        expect(noMonsterMessage).toBeNull();
 
-      // expect error message to not exist in DOM
-      const errorMessage = fixture.nativeElement.querySelector('#errorMessage');
-      expect(errorMessage).toBeNull();
+        // expect error message to not exist in DOM
+        const errorMessage = fixture.nativeElement.querySelector('#errorMessage');
+        expect(errorMessage).toBeNull();
 
 
-      // expect child component (<app-card>) to receive data for single monster returned by resolve
-      let childCardElement = fixture.debugElement.query(By.css('app-card'));
-      expect(childCardElement).toBeTruthy();
+        // expect child component (<app-card>) to receive data for single monster returned by resolve
+        let childCardElement = fixture.debugElement.query(By.css('app-card'));
+        expect(childCardElement).toBeTruthy();
 
-      const usernameElement = childCardElement.query(By.css('h4')).nativeElement;
-      expect(usernameElement.textContent).toBe(monster.username);
+        const usernameElement = childCardElement.query(By.css('h4')).nativeElement;
+        expect(usernameElement.textContent).toBe(monster.username);
 
-      const listElement = childCardElement.queryAll(By.css('.list-group-item'));
+        const listElement = childCardElement.queryAll(By.css('.list-group-item'));
 
-      const nameElement = listElement[0].nativeElement;
-      expect(nameElement.textContent).toBe('FirstName LastName');
+        const nameElement = listElement[0].nativeElement;
+        expect(nameElement.textContent).toBe('FirstName LastName');
 
-      const emailElement = listElement[1].nativeElement;
-      expect(emailElement.textContent).toBe(monster.email);
+        const emailElement = listElement[1].nativeElement;
+        expect(emailElement.textContent).toBe(monster.email);
 
-    });
+        const catchlineElement = listElement[2].nativeElement;
+        expect(catchlineElement.textContent).toBe(monster.catchline);
+
+
+      });
 
     // Note the remove button on the card component emits an event to the parent component to perform the removal.
     it('should be able to remove Monster', () => {

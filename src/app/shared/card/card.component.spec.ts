@@ -65,6 +65,7 @@ describe('CardComponent', () => {
 
     component.data = newMonster;
     fixture.detectChanges();
+
     const usernameElement = fixture.debugElement.query(By.css('h4')).nativeElement;
     expect(usernameElement.textContent).toBe(newMonster.username);
 

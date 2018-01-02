@@ -2,7 +2,6 @@
 
   <div class="card-header d-flex align-items-center justify-content-between" style="background-color: chartreuse">
     <img class=“card-img-top” src="/assets/images/{{data.imageFile}}" alt="Card image cap" appExpander height="80px" width="80px">
-    <!--<img class=“card-img-top” src="/assets/images/{{data.imageFile}}" alt="Card image cap" appExpander>-->
     <h4 class=“card-title”>{{data.username}}</h4>
   </div>
 
@@ -15,8 +14,8 @@
   </div>
 
   <div class="card-block">
-    <button id='editButton' type="button" class="btn btn-primary card-link" (click)="editMonster();"><i class="fa fa-pencil"></i> Edit</button>
-    <button id='removeButton' type="button" class="btn btn-danger card-link" (click)="removeMonster();"><i class="fa fa-trash"></i> Remove</button>
+    <button type="button" class="btn btn-primary card-link" (click)="editMonster();"><i class="fa fa-pencil"></i> Edit</button>
+    <button type="button" class="btn btn-danger card-link" (click)="removeMonster();"><i class="fa fa-trash"></i> Remove</button>
   </div>
 
 </div>

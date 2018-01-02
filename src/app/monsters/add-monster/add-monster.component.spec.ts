@@ -145,6 +145,27 @@ describe('AddMonsterComponent - isolated tests', () => {
 
   });
 
+  describe('should accept catchline values', () => {
+
+    beforeEach(() => {
+      username = component.addMonsterForm.get('catchline');
+    });
+
+    it('should accept legitimate value', () => {
+      username.setValue('something cheesy');
+      expect(username.valid).toBeTruthy();
+      expect(username.errors).toBeNull();
+    });
+
+    it('should not complain if field is empty', () => {
+      username.setValue('');
+      expect(username.valid).toBeTruthy();
+      let errors = username.errors;
+      expect(errors).toBeNull();
+    });
+
+  });
+
 });
 
 
@@ -195,6 +216,7 @@ describe('AddMonsterComponent - shallow tests', () => {
     component.addMonsterForm.get('username').setValue('frankie');
     component.addMonsterForm.get('email').setValue('frankie@monster.com');
     component.addMonsterForm.get('imageFile').setValue('icon11.png');
+    component.addMonsterForm.get('catchline').setValue('something cheesy');
   }
 
   it('should create', () => {

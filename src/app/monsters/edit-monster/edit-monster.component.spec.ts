@@ -71,6 +71,7 @@ describe('EditMonsterComponent', () => {
       expect(component.editMonsterForm.get('email').value).toBe('first@lastname.com');
       expect(component.editMonsterForm.get('username').value).toBe('username');
       expect(component.editMonsterForm.get('imageFile').value).toBe('icon01.png');
+      expect(component.editMonsterForm.get('catchline').value).toBe('Cheesy feet smell great, and I have the greatest feet');
     });
 
   });
