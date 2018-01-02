@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
-import {HomeComponent} from './layout/home/home.component';
+import {HomeComponent} from './home/home.component';
 import {AddMonsterComponent} from './monsters/add-monster/add-monster.component';
 import {ViewMonstersComponent} from './monsters/view-monsters/view-monsters.component';
 import {EditMonsterComponent} from './monsters/edit-monster/edit-monster.component';

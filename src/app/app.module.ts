@@ -8,7 +8,7 @@ import {RouterModule} from '@angular/router';
 import {MonstersModule} from './monsters/monsters.module';
 import {SharedModule} from './shared/shared.module';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
-import {HomeComponent} from './layout/home/home.component';
+import {HomeComponent} from './home/home.component';
 
 @NgModule({
   declarations: [
