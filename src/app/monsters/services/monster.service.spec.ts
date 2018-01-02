@@ -12,10 +12,10 @@ describe('MonsterService', () => {
   const id = 'abc123';
 
   const monsterWithNoId = new Monster('freddie', 'krueger', 'freddie@nails-salon.com',
-    'freddie', 'icon09.png');
+    'freddie', 'icon09.png', 'Cheesy feet smell great, and I have the greatest feet');
 
   const monsterWithId = new Monster('freddie', 'krueger', 'freddie@nails-salon.com',
-    'freddie', 'icon09.png', id);
+    'freddie', 'icon09.png', 'Cheesy feet smell great, and I have the greatest feet', id);
 
   const monsters = [monsterWithId];
 

@@ -26,7 +26,11 @@ var MonsterSchema = new Schema({
                                    trim: true,
                                    required: 'username cannot be blank'
                                  },
-  
+                                 catchline: {
+                                   type: String,
+                                   default: '',
+                                   trim: true
+                                 },
                                  imageFile: {
                                     type: String,
                                     default: '',

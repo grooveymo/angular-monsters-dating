@@ -20,6 +20,7 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
   lastName: FormControl;
   email: FormControl;
   username: FormControl;
+  catchline: FormControl;
   imageFile: FormControl;
 
   fetchError = false;
@@ -54,6 +55,7 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
     this.email.setValue(this.monster.email);
     this.username.setValue(this.monster.username);
     this.imageFile.setValue(this.monster.imageFile);
+    this.catchline.setValue(this.monster.catchline);
   }
 
   /**
@@ -71,6 +73,7 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
       Validators.pattern(this.REGEX_USERNAME)
     ]);
     this.imageFile = new FormControl('');
+    this.catchline = new FormControl('');
   }
 
   /**
@@ -84,7 +87,8 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
       }),
       imageFile: this.imageFile,
       username: this.username,
-      email: this.email
+      email: this.email,
+      catchline: this.catchline
     });
   }
 
@@ -97,7 +101,7 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
   onSave(): void {
     if (this.editMonsterForm.valid) {
       const newMonster = new Monster(this.firstName.value, this.lastName.value,
-        this.email.value, this.username.value, this.imageFile.value, this.monster._id);
+        this.email.value, this.username.value, this.imageFile.value, this.catchline.value, this.monster._id);
 
       this.editMonsterSubscription = this.monsterService.updateMonster(newMonster).subscribe(persistedMonster => {
         this.router.navigate(['/view-monsters/']);

@@ -82,6 +82,19 @@
         </div>
       </div>
 
+      <div class="form-group" [ngClass]="{
+        'has-success': catchline.valid && (catchline.dirty || catchline.touched)
+   }">
+        <label>Catchline</label>
+
+        <div class="input-group">
+          <span class="input-group-addon"><span class="fa fa-comment-o" aria-hidden="true"></span></span>
+          <input type="text"
+                 class="form-control"
+                 formControlName="catchline">
+        </div>
+      </div>
+
       <div class="form-group">
         <label>Image File </label>
         <div class="input-group">

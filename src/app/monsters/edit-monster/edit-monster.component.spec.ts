@@ -19,7 +19,8 @@ import {By} from '@angular/platform-browser';
 describe('EditMonsterComponent', () => {
   let component: EditMonsterComponent;
   let fixture: ComponentFixture<EditMonsterComponent>;
-  const monster = new Monster('firstName', 'lastName', 'first@lastname.com', 'username', 'icon01.png');
+  const monster = new Monster('firstName', 'lastName', 'first@lastname.com',
+    'username', 'icon01.png', 'Cheesy feet smell great, and I have the greatest feet');
   const ERROR_MESSAGE = 'Unknown Error';
   const ERROR_STATUS = 0;
 

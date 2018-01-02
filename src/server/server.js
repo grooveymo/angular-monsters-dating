@@ -41,22 +41,10 @@ var router = express.Router();
 
 // middleware to use for all requests
 router.use(function(req, res, next) {
-  // do logging
-  console.log('request received');
-  
-  // Website you wish to allow to connect
   res.setHeader('Access-Control-Allow-Origin', '*');// enable angularjs app to connect
-  
-  // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  
-  // Request headers you wish to allow
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-  
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
   res.setHeader('Access-Control-Allow-Credentials', true);
-  
   next();
 });
 
@@ -83,6 +71,7 @@ router.route('/monsters/:id')
       monster.email = req.body.email;
       monster.imageFile = req.body.imageFile;
       monster.username = req.body.username;
+      monster.catchline = req.body.catchline;
       
       monster.save(function(err, updatedMonster) {
         if (err) {
@@ -136,7 +125,10 @@ router.route('/monsters/')
     monster.email = req.body.email;
     monster.imageFile = req.body.imageFile;
     monster.username = req.body.username;
-
+    monster.catchline = req.body.catchline;
+    
+  console.log('catchlineL: ', req.body.catchline);
+  
     monster.save(function(err) {
       if (err) {
         console.log('[ERROR] POST /monster - ' + JSON.stringify(err));

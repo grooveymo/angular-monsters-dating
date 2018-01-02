@@ -17,6 +17,7 @@ export class AddMonsterComponent implements OnInit, OnDestroy {
   lastName: FormControl;
   email: FormControl;
   username: FormControl;
+  catchline: FormControl;
   imageFile: FormControl;
 
   addMonsterSubscription: Subscription;
@@ -42,6 +43,7 @@ export class AddMonsterComponent implements OnInit, OnDestroy {
     this.lastName = new FormControl('', [Validators.required, Validators.minLength(5)]);
     this.email = new FormControl('', [Validators.required, Validators.pattern(this.REGEX_EMAIL)]);
     this.username = new FormControl('', [Validators.required, Validators.pattern(this.REGEX_USERNAME)]);
+    this.catchline = new FormControl('');
     this.imageFile = new FormControl('');
   }
 
@@ -56,6 +58,7 @@ export class AddMonsterComponent implements OnInit, OnDestroy {
       }),
       imageFile: this.imageFile,
       username: this.username,
+      catchline: this.catchline,
       email: this.email
     });
   }
@@ -68,7 +71,7 @@ export class AddMonsterComponent implements OnInit, OnDestroy {
     /* istanbul ignore else  */
     if (this.addMonsterForm.valid) {
       const newMonster = new Monster(this.firstName.value, this.lastName.value,
-        this.email.value, this.username.value, this.imageFile.value);
+        this.email.value, this.username.value, this.imageFile.value, this.catchline.value);
 
       this.addMonsterSubscription = this.monsterService.addMonster(newMonster)
         .subscribe(persistedMonster => {

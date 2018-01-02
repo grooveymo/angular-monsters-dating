@@ -10,7 +10,8 @@ describe('CardComponent', () => {
   let component: CardComponent;
   let fixture: ComponentFixture<CardComponent>;
   const monster = new Monster('marsh', 'mellowman', 'marshmellowman@ghostbusters.com',
-    'marshie', 'icon01.png', 'abc123');
+    'marshie', 'icon01.png', 'Cheesy feet smell great, and I have the greatest feet'
+    , 'abc123');
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -52,9 +53,15 @@ describe('CardComponent', () => {
     expect(emailElement.textContent).toBe(monster.email);
   });
 
+  it('should display catchline', () => {
+    const listElement = fixture.debugElement.queryAll(By.css('.list-group-item'));
+    const catchlineElement = listElement[2].nativeElement;
+    expect(catchlineElement.textContent).toBe(monster.catchline);
+  });
+
   it('should handle @Input', () => {
     const newMonster = new Monster('alfie', 'beteater', 'alfie@ghostbusters.com',
-      'alfie', 'icon02.png', 'def456');
+      'alfie', 'icon02.png', 'another catchline', 'def456');
 
     component.data = newMonster;
     fixture.detectChanges();
@@ -67,37 +74,35 @@ describe('CardComponent', () => {
     expect(nameElement.textContent).toBe('Alfie Beteater');
     const emailElement = listElement[1].nativeElement;
     expect(emailElement.textContent).toBe(newMonster.email);
+    const catchlineElement = listElement[2].nativeElement;
+    expect(catchlineElement.textContent).toBe(newMonster.catchline);
 
   });
 
-  // **************************************************************************************************************************
-  // TODO - need to locate edit button other than using id (#editButton) since we'll have multiple instances of
-  // card component on ViewComponets page. Same applies to remove button
-  // **************************************************************************************************************************
   describe('should handle @Output', () => {
 
-      it('should emit edit event', () => {
-
-        // subscribe to the emitted event
-        component.emitEditMonster.subscribe( (value) => {
-          expect(value).toBe('abc123');
-        });
-
-        // trigger event emission by clicking on button
-        const editButton = fixture.nativeElement.querySelector('#editButton');
-        editButton.click();
-
-      });
-
-    it('should emit remove event', () => {
+    it('should emit edit event', () => {
 
       // subscribe to the emitted event
-      component.emitRemoveMonster.subscribe( (value) => {
+      component.emitEditMonster.subscribe((value) => {
         expect(value).toBe('abc123');
       });
 
       // trigger event emission by clicking on button
-      const removeButton = fixture.nativeElement.querySelector('#removeButton');
+      const editButton = fixture.nativeElement.querySelector('button.btn-primary');
+      editButton.click();
+
+    });
+
+    it('should emit remove event', () => {
+
+      // subscribe to the emitted event
+      component.emitRemoveMonster.subscribe((value) => {
+        expect(value).toBe('abc123');
+      });
+
+      // trigger event emission by clicking on button
+      const removeButton = fixture.nativeElement.querySelector('button.btn-danger');
       removeButton.click();
 
     });

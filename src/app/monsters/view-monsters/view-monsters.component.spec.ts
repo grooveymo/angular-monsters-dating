@@ -19,7 +19,8 @@ import {CapitalizeNamePipe} from '../../shared/pipes/capitalize-name.pipe';
 describe('ViewMonstersComponent', () => {
   let component: ViewMonstersComponent;
   let fixture: ComponentFixture<ViewMonstersComponent>;
-  const monster = new Monster('firstName', 'lastName', 'first@lastname.com', 'username', 'icon01.png', 'abc123');
+  const monster = new Monster('firstName', 'lastName', 'first@lastname.com',
+    'username', 'icon01.png', '','abc123');
   const ERROR_MESSAGE = 'Unknown Error';
   const ERROR_STATUS = 0;
 
