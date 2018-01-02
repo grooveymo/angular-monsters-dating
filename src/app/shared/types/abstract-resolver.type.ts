@@ -3,7 +3,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 /**
  * Non HTTP response type errors
  */
-class UnclassifiedError extends Error {
+class NonHttpResponseError extends Error {
   constructor(public originalError: any) {
     super();
   }
@@ -19,7 +19,7 @@ export class AbstractResolver {
     if(err instanceof  HttpErrorResponse) {
       return err;
     }
-    return new UnclassifiedError(err);
+    return new NonHttpResponseError(err);
   }
 
 }

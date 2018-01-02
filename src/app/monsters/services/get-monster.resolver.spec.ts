@@ -13,7 +13,6 @@ import {ActivatedRouteStub} from '../../../../test/activated-route.stub';
 describe('GetMonsterResolverService', () => {
 
   const REST_API_URI = 'http://localhost:8080/';
-  // const data = JSON.parse(ORDER_RESPONSE);
   const data = {
     firstName: 'homer',
     lastName: 'simpson',
