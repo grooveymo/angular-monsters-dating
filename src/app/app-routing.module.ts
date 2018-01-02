@@ -9,7 +9,6 @@ import {GetMonstersResolver} from './monsters/services/get-monsters.resolver';
 import {GetMonsterResolver} from './monsters/services/get-monster.resolver';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 
-// declare app routes (note should not have leading slash)
 const appRoutes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
@@ -27,6 +26,6 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes , /*{enableTracing: true}*/ )
   ],
   declarations: [],
-  exports: [RouterModule] // Need this to ensure that routes get registered in the root module
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }
