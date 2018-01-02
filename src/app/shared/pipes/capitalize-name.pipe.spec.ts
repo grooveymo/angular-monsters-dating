@@ -52,7 +52,6 @@ describe('CapitalizeNamePipe', () => {
   it('should handle mixed case values', () => {
     const input = 'count Dracula';
     result = pipe.transform(input);
-    console.log('before: ' + input + ' after: ' + result);
     expect(result).toBe('Count Dracula');
   });
 

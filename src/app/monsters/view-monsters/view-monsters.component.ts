@@ -22,11 +22,9 @@ export class ViewMonstersComponent implements OnInit, OnDestroy {
   ngOnInit() {
     let resolvedValue = this.route.snapshot.data.monstersData;
     if (resolvedValue.hasError()) {
-      console.log('Error retrieving data', resolvedValue.error);
       this.fetchError = true;
     } else {
       this.monsters = resolvedValue.data;
-      console.log('monsters retrieved => ', this.monsters);
     }
   }
 
@@ -37,17 +35,12 @@ export class ViewMonstersComponent implements OnInit, OnDestroy {
   }
 
   editMonster($event): void {
-    console.log('[viewMonsters] editing: ', $event);
     this.router.navigate(['/edit-monster/', $event]);
   }
 
   removeMonster($event): void {
-    console.log('[viewMonsters] removeMonster: id = ', $event);
-
-    console.log('removing: ', $event);
     let id = $event;
     this.removeMonsterSubscription = this.monsterService.removeMonster(id).subscribe(response => {
-        console.log('backend returns response => ', response);
       this.router.navigate(['/home']);
       },
       err => {

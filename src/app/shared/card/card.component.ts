@@ -21,7 +21,6 @@ export class CardComponent implements OnInit {
   constructor(public router: Router) { }
 
   ngOnInit() {
-    console.log('data: ', this.data);
   }
 
   getFullName(): string {

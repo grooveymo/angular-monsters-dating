@@ -72,7 +72,6 @@ router.route('/monsters/:id')
     console.log('Updating contact : ', req.params.id);
     Monster.findById({ _id: req.params.id }, function(err, monster) {
       if (err) {
-        console.log('[ERROR] PUT /monster - ' + JSON.stringify(err));
         return res.send(err);
       }
       
@@ -87,7 +86,6 @@ router.route('/monsters/:id')
       
       monster.save(function(err, updatedMonster) {
         if (err) {
-          console.log('[ERROR] PUT /monster - ' + JSON.stringify(err));
           res.status(400);
           return res.send(err);
         }
@@ -114,20 +112,14 @@ router.route('/monsters/:id')
     });
   })
   .delete(function(req, res) {
-  
-    console.log('[ APPLE**** ] monster to be deleted: ');
-  
     var toBeDeletedId = req.params.id;
     
-    console.log('[ APPLE ] monster to be deleted: ', toBeDeletedId);
-    //Monster.remove({ _id: toBeDeletedId }, function(err) {
+    console.log('monster to be deleted: ', toBeDeletedId);
+
     Monster.findByIdAndRemove({ _id: toBeDeletedId }, function(err, doc) {
-      console.log('doc = ', doc);
       if (err || !doc) {
-        console.log('[ APPLE ] ERROR: DELETE /monster - ' + JSON.stringify(err));
         return res.send(err);
       } else {
-        console.log('[ APPLE ] remove monster called: ', toBeDeletedId);
         res.json({ message: 'Successfully deleted', id: toBeDeletedId });
       }
     });
@@ -156,8 +148,7 @@ router.route('/monsters/')
     });
   })
   .get(function(req, res) {
-//    console.log('[GENERAL] calling GET /monsters/', req);
-    console.log('[GENERAL] calling GET /monsters/');
+    console.log('calling GET /monsters/');
     Monster.find(function(err, contactList) {
       if (err) {
         console.log('[ERROR] GET /monster - ' + JSON.stringify(err));

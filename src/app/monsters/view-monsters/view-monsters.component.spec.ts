@@ -39,6 +39,11 @@ describe('ViewMonstersComponent', () => {
   const dataResponseEmpty = {monstersData: resolvedValueEmpty};
   const activatedRouteStubWithSuccessAndEmpty = new ActivatedRouteStub(dataResponseEmpty);
 
+  //============================================================================================================
+  // Shallow tests
+  // These tests will focus solely on the target component (ViewMonstersComponent)
+  //============================================================================================================
+
   describe('after a successful resolve, ', () => {
 
     let monsterService;
@@ -105,7 +110,8 @@ describe('ViewMonstersComponent', () => {
       let mockMonsterServiceSpy = spyOn(monsterService, 'removeMonster').and.returnValue(obs);
 
       // create spy for router.navigate()
-      let navigateSpy = spyOn((<any>component).router, 'navigate');
+      let router = TestBed.get(Router);
+      let navigateSpy = spyOn(router, 'navigate');
 
       // invoke removal
       component.removeMonster('abc123');
@@ -117,8 +123,6 @@ describe('ViewMonstersComponent', () => {
     it('should be able to edit Monster', () => {
 
       // create spy for router.navigate()
-      // let navigateSpy = spyOn((<any>component).router, 'navigate');
-
       let router = TestBed.get(Router);
       let navigateSpy = spyOn(router, 'navigate');
 

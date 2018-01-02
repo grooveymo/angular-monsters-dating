@@ -32,14 +32,12 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('this.fetchError: ', this.fetchError);
     this.createFormControls();
     this.createForm();
 
     let resolvedValue = this.route.snapshot.data.monsterData;
 
     if(resolvedValue.hasError()) {
-      console.log('Error retrieving data', resolvedValue.error);
       this.fetchError = true;
     } else {
       this.monster = resolvedValue.data;
@@ -98,13 +96,10 @@ export class EditMonsterComponent implements OnInit, OnDestroy {
 
   onSave(): void {
     if (this.editMonsterForm.valid) {
-      console.log('Form Submitted!');
-
       const newMonster = new Monster(this.firstName.value, this.lastName.value,
         this.email.value, this.username.value, this.imageFile.value, this.monster._id);
 
       this.editMonsterSubscription = this.monsterService.updateMonster(newMonster).subscribe(persistedMonster => {
-        console.log('monster persisted: ', persistedMonster);
         this.router.navigate(['/view-monsters/']);
       });
       this.editMonsterForm.reset();

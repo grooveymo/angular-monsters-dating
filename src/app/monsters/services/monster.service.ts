@@ -22,8 +22,6 @@ export class MonsterService {
   addMonster(body: Monster): Observable<Monster> {
 
     let headers = new HttpHeaders({'Content-Type': 'application/json'});
-
-    console.log('inside service with body : ' + JSON.stringify(body));
     return this.http
       .post<Monster>(MONSTERS_REST_API, body, {headers: headers});
 
@@ -45,7 +43,6 @@ export class MonsterService {
    * @return {Monster} Instance of Monster
    */
   getMonster(_id: string): Observable<Monster> {
-    console.log(' looking for _id: ', _id);
     return this.http
       .get<Monster>(MONSTERS_REST_API + '/' + _id);
   }
@@ -61,11 +58,8 @@ export class MonsterService {
 
     const path = MONSTERS_REST_API + '/' + monster._id;
 
-    console.log('inside service with body : ' + JSON.stringify(monster));
     return this.http
       .put<Monster>(path, monster,{headers: headers});
-      // .catch((error: any) => Observable.throw(error.json().error || 'Server error')
-      // );
 
   }
 
@@ -76,7 +70,6 @@ export class MonsterService {
    * @return {Observable<any | any>}
    */
   removeMonster(monsterId: string): Observable<any> {
-    console.log('about to remove monster', monsterId);
     const path = MONSTERS_REST_API + '/' + monsterId;
     return this.http.delete<string>(path);
   }
