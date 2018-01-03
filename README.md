@@ -1,25 +1,17 @@
 # Angular Monsters Dating Agency
 ## Introduction
-A basic application implemented using
- - angular 4
- - node/express
- - mongodb
+A basic application implemented using the MEAN stack 
+ - Mongodb
+ - Angular 5
+ - Node/Express
   
 ## Instructions
-- Install app dependencies - `$ npm install`
-- Install mongodb
+- Install mongodb - https://www.mongodb.com/download-center#community
 - start mongodb - `mongod --dbpath .`
-- start server - `$ npm run start_server`
+- install angular-cli (1.5)
+- Install app dependencies - `$ npm install`
+- deploy REST API - `$ npm run start_server`
 - start ui - `$ ng serve`
-
-
-
-
-
-
-
-
-
 
 
 # AngularMonstersContacts
