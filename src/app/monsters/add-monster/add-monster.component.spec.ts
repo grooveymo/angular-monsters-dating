@@ -225,13 +225,11 @@ describe('AddMonsterComponent - shallow tests', () => {
 
   describe('save button', () => {
     it('is disabled when the form is in an invalid state', async(() => {
-      fixture.detectChanges();
       expect(component.addMonsterForm.valid).toBeFalsy();
       const button = fixture.nativeElement.querySelector('#addMonsterButton');
       expect(button.disabled).toBeTruthy();
     }));
     it('is enabled when the form is in a valid state', async(() => {
-      fixture.detectChanges();
       expect(component.addMonsterForm.valid).toBeFalsy();
       const button = fixture.nativeElement.querySelector('#addMonsterButton');
       expect(button.disabled).toBeTruthy();
